@@ -110,7 +110,7 @@ export default function About() {
                         <a href="https://bestblogs.dev" target="_blank" rel="noopener noreferrer" className="px-1 text-blue-500 hover:text-blue-600">
                             bestblogs.dev
                         </a>
-                        ，每周发送 AI 精选文章，目前已有超过 2000 位订阅者。我相信技术不仅仅是工具，更是创造价值和改变世界的力量。
+                        ，每周发送 AI 精选文章，目前已有超过 3000 位订阅者。我相信技术不仅仅是工具，更是创造价值和改变世界的力量。
                     </p>
                 </div>
 
@@ -194,7 +194,7 @@ export default function About() {
                             📬 免费订阅我的 AI 周刊
                         </h3>
                         <p className="mt-2 text-blue-800 dark:text-blue-200">
-                            每周精选高质量的 AI 文章，帮助你跟上人工智能的最新发展。已有超过 2000 位读者订阅，欢迎加入我们！
+                            每周精选高质量的 AI 文章，帮助你跟上人工智能的最新发展。已有超过 3000 位读者订阅，欢迎加入我们！
                         </p>
                         <a
                             href="https://www.bestblogs.dev/#subscribe"
