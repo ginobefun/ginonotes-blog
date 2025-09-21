@@ -112,6 +112,7 @@ pnpm dev
    - Public URL（如果配置了自定义域名）
 
 2. 在项目根目录创建 `.env` 文件并填写以下配置：
+
 ```env
 CLOUDFLARE_ACCOUNT_ID=your_account_id
 R2_ACCESS_KEY_ID=your_access_key_id
