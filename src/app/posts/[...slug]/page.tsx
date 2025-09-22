@@ -113,7 +113,7 @@ export default function PostPage({ params }: PostProps) {
 
                         {/* 右侧目录 */}
                         <aside className="hidden xl:block">
-                            <div className="sticky top-24">
+                            <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto pr-3 py-4">
                                 <TableOfContents headings={headings} />
                             </div>
                         </aside>
