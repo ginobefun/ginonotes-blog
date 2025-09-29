@@ -6,6 +6,7 @@ import { GiPokerHand } from 'react-icons/gi'
 import { HiMail } from 'react-icons/hi'
 import { BsRobot, BsGear } from 'react-icons/bs'
 import { Container } from '@/components/common/Container'
+import { Breadcrumb } from '@/components/navigation/Breadcrumb'
 
 const meta = {
     title: '关于我 - Just be funny',
@@ -99,7 +100,8 @@ const contacts = [
 export default function About() {
     return (
         <Container size="md">
-            <div className="py-12 sm:py-16 lg:py-20">
+            <div className="py-6 sm:py-12 lg:py-16">
+                <Breadcrumb />
                 {/* 头部介绍 */}
                 <div>
                     <h1 className="bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl">

@@ -8,6 +8,9 @@ import { calculateReadingTime } from '@/lib/utils'
 import { PostHeader } from '@/components/post/PostHeader'
 import { PostContent } from '@/components/post/PostContent'
 import { PostFooter } from '@/components/post/PostFooter'
+import { Breadcrumb } from '@/components/navigation/Breadcrumb'
+import { getCategoryName } from '@/lib/images'
+import { createCategoryRoute } from '@/lib/routes'
 
 interface PostProps {
     params: {
@@ -26,7 +29,7 @@ const getAdjacentPosts = (currentPost: any) => {
 
 // 获取推荐文章
 const getRecommendedPosts = (currentPost: any, categoryPosts: any[]) => {
-    // 如果同类文章不足4篇，则补充最新文章
+    // 如果同类文章不足 4 篇，则补充最新文章
     if (categoryPosts.length < 4) {
         const latestPosts = allPosts
             .filter(post => post._id !== currentPost._id && post.category !== currentPost.category)
@@ -77,11 +80,24 @@ export default function PostPage({ params }: PostProps) {
     const recommendedPosts = getRecommendedPosts(post, categoryPosts)
     const headings = extractHeadings(post.body.raw)
 
+    // 构建面包屑数据
+    const breadcrumbItems = [
+        {
+            label: getCategoryName(post.category as any),
+            href: createCategoryRoute(post.category)
+        },
+        {
+            label: post.title,
+            isCurrentPage: true
+        }
+    ]
+
     return (
         <div className="relative w-full min-h-screen">
             <ReadingProgress />
             <Container size="default">
-                <div className="py-10 lg:py-12">
+                <div className="py-6 sm:py-10 lg:py-12">
+                    <Breadcrumb customItems={breadcrumbItems} />
                     <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,_1fr)_240px] gap-10">
                         {/* 中间内容区 */}
                         <main className="min-w-0">
