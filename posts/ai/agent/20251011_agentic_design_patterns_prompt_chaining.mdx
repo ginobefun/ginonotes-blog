@@ -226,7 +226,7 @@ pip install langchain langchain-community langchain-openai langgraph
 
 请注意，langchain-openai 可以替换为其他模型提供商的相应库包。此外，你必须在运行环境中配置好所选语言模型（如 OpenAI、Google Gemini 或 Anthropic）的 API 密钥。
 
-[Colab 代码](https://colab.research.google.com/drive/15XCzDOvBhIQaZ__xkvruf5sP9OznAbK9) 已维护在[此处](/codes/Chapter-01-Prompt-Chaining-Example.py)。
+[Colab 代码](https://colab.research.google.com/drive/15XCzDOvBhIQaZ__xkvruf5sP9OznAbK9) 已维护在[此处](https://github.com/ginobefun/agentic-design-patterns-cn/blob/main/codes/Chapter-01-Prompt-Chaining-Example.py)。
 
 ```python path=null start=null
 import os
@@ -323,7 +323,7 @@ print(final_result)
 
 **解决之道：** 提示链模式的精髓在于化整为零，它将一个复杂的问题分解为一系列更小、且环环相扣的子任务，从而提供了一套标准化的解法。链条中的每一步都使用一个高度聚焦的提示来执行特定操作，极大地提升了可靠性与可控性。上一步的输出会作为下一步的输入，由此创建出一个逻辑清晰的工作流，逐步构建出最终的解决方案。这种模块化的策略，让整个过程更易于管理和调试，并允许在步骤之间集成外部工具或结构化数据。该模式是开发能够规划、推理和执行复杂工作流的高级智能体系统的基础。
 
-**经验法则：** 如果一项任务过于复杂，单个提示难以胜任；或涉及多个独立的处理步骤；或需要在步骤间与外部工具交互；亦或在构建需要多步推理和状态维持的智能体系统时，都可考虑使用此模式。
+**适用场景：** 如果一项任务过于复杂，单个提示难以胜任；或涉及多个独立的处理步骤；或需要在步骤间与外部工具交互；亦或在构建需要多步推理和状态维持的智能体系统时，都可考虑使用此模式。
 
 **可视化总结**
 
