@@ -196,7 +196,7 @@ export default function About() {
                             📬 免费订阅我的 AI 周刊
                         </h3>
                         <p className="mt-2 text-blue-800 dark:text-blue-200">
-                            每周精选高质量的 AI 文章，帮助你跟上人工智能的最新发展。已有超过 3000 位读者订阅，欢迎加入我们！
+                            每周精选高质量的 AI 文章，帮助你跟上人工智能的最新发展。已有超过 4000 位读者订阅，欢迎加入我们！
                         </p>
                         <a
                             href="https://www.bestblogs.dev/#subscribe"
