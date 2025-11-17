@@ -37,9 +37,9 @@ export function Comments({ className }: CommentsProps) {
     <div className={className}>
       <Giscus
         repo="ginobefun/ginonotes-blog"
-        repoId="your-repo-id" // 请替换为实际的 repo ID
+        repoId="R_kgDOLerfFw"
         category="Comments"
-        categoryId="your-category-id" // 请替换为实际的 category ID
+        categoryId="DIC_kwDOLerfF84Cx56q"
         mapping="pathname"
         strict="0"
         reactionsEnabled="1"
