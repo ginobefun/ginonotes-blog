@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { allPosts } from 'contentlayer/generated'
+import { allPosts } from 'contentlayer2/generated'
 import Link from 'next/link'
 import { PostRoute } from '@/lib/routes'
 import { Search as SearchIcon } from 'lucide-react'

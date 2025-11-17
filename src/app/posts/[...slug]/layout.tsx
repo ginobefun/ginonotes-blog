@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { allPosts } from 'contentlayer/generated'
+import { allPosts } from 'contentlayer2/generated'
 import {
     WEBSITE_HOST_URL,
     WEBSITE_AUTHOR,
@@ -9,9 +9,9 @@ import {
 
 interface PostLayoutProps {
     children: React.ReactNode
-    params: {
+    params: Promise<{
         slug: string[]
-    }
+    }>
 }
 
 function getOgImage(post: { cover?: string }) {
@@ -58,9 +58,10 @@ function generatePostJsonLd(post: any) {
 }
 
 export async function generateMetadata({ params }: PostLayoutProps): Promise<Metadata> {
+    const { slug } = await params
     const post = allPosts.find((post) => {
         const urlPath = post.url.replace('/posts/', '')
-        return urlPath === params.slug.join('/')
+        return urlPath === slug.join('/')
     })
 
     if (!post) return {}
@@ -104,11 +105,12 @@ export async function generateMetadata({ params }: PostLayoutProps): Promise<Met
     }
 }
 
-export default function PostLayout({ children, params }: PostLayoutProps) {
+export default async function PostLayout({ children, params }: PostLayoutProps) {
     // 获取文章数据用于生成结构化数据
+    const { slug } = await params
     const post = allPosts.find((post) => {
         const urlPath = post.url.replace('/posts/', '')
-        return urlPath === params.slug.join('/')
+        return urlPath === slug.join('/')
     })
 
     return (

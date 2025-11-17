@@ -1,4 +1,4 @@
-import { Post } from 'contentlayer/generated'
+import { Post } from 'contentlayer2/generated'
 import { Container } from '@/components/common/Container'
 import { FeaturedPost } from '@/components/home/FeaturedPost'
 

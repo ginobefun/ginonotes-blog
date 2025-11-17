@@ -1,4 +1,4 @@
-import { allPosts } from 'contentlayer/generated'
+import { allPosts } from 'contentlayer2/generated'
 import { getFeaturedPost, getRecentPosts } from '@/lib/posts'
 import { FeaturedSection } from './FeaturedSection'
 import { PostList } from './PostList'

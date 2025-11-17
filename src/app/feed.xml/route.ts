@@ -1,5 +1,5 @@
 import { WEBSITE_HOST_URL } from '@/lib/constants'
-import { allPosts } from 'contentlayer/generated'
+import { allPosts } from 'contentlayer2/generated'
 import RSS from 'rss'
 
 export async function GET() {

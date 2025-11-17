@@ -1,6 +1,6 @@
 'use client'
 
-import { Post } from 'contentlayer/generated'
+import { Post } from 'contentlayer2/generated'
 import { format, parseISO } from 'date-fns'
 import Link from 'next/link'
 import { motion } from 'framer-motion'

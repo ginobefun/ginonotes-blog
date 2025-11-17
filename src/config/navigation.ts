@@ -14,7 +14,7 @@ import {
   FaWeixin,
   FaFeather,
 } from 'react-icons/fa'
-import { allPosts } from 'contentlayer/generated'
+import { allPosts } from 'contentlayer2/generated'
 import { createCategoryRoute } from '@/lib/routes'
 
 // 获取每个分类的文章数量

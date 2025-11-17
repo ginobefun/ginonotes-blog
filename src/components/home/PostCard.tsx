@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Post } from 'contentlayer/generated'
+import { Post } from 'contentlayer2/generated'
 import { formatDate } from '@/lib/utils'
 import { getCategoryName, CATEGORY_MAP } from '@/lib/images'
 

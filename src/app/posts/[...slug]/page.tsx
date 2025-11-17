@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
-import { allPosts } from 'contentlayer/generated'
-import { getMDXComponent } from 'next-contentlayer/hooks'
+import { allPosts } from 'contentlayer2/generated'
+import { getMDXComponent } from 'next-contentlayer2/hooks'
 import { TableOfContents } from '@/components/post/TableOfContents'
 import { ReadingProgress } from '@/components/post/ReadingProgress'
 import { Container } from '@/components/common/Container'
@@ -13,9 +13,9 @@ import { getCategoryName } from '@/lib/images'
 import { createCategoryRoute } from '@/lib/routes'
 
 interface PostProps {
-    params: {
+    params: Promise<{
         slug: string[]
-    }
+    }>
 }
 
 // 获取上一篇和下一篇文章（同分类）
@@ -66,10 +66,11 @@ function extractHeadings(content: string) {
     return headings
 }
 
-export default function PostPage({ params }: PostProps) {
+export default async function PostPage({ params }: PostProps) {
+    const { slug } = await params
     const post = allPosts.find((post) => {
         const urlPath = post.url.replace('/posts/', '')
-        return urlPath === params.slug.join('/')
+        return urlPath === slug.join('/')
     })
 
     if (!post) notFound()

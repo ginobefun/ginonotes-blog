@@ -1,6 +1,6 @@
 'use client'
 
-import { Post } from 'contentlayer/generated'
+import { Post } from 'contentlayer2/generated'
 import { PostCard } from '@/components/common/PostCard'
 import { motion } from 'framer-motion'
 import { getCategoryName, CATEGORY_MAP } from '@/lib/images'

@@ -2,9 +2,9 @@
 
 import { format, parseISO } from 'date-fns'
 import Link from 'next/link'
-import { Post } from 'contentlayer/generated'
+import { Post } from 'contentlayer2/generated'
 import { getCategoryName, CATEGORY_MAP } from '@/lib/images'
-import { useMDXComponent } from 'next-contentlayer/hooks'
+import { useMDXComponent } from 'next-contentlayer2/hooks'
 import { TableOfContents } from '@/components/post/TableOfContents'
 import { PostRoute, createTagRoute } from '@/lib/routes'
 import { useEffect, useState, useRef } from 'react'

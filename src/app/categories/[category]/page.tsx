@@ -1,4 +1,4 @@
-import { allPosts } from 'contentlayer/generated'
+import { allPosts } from 'contentlayer2/generated'
 import { compareDesc } from 'date-fns'
 import { CATEGORY_MAP } from '@/lib/images'
 import { notFound } from 'next/navigation'
@@ -9,27 +9,30 @@ import { Breadcrumb } from '@/components/navigation/Breadcrumb'
 const POSTS_PER_PAGE = 10
 
 interface CategoryPageProps {
-    params: {
+    params: Promise<{
         category: string
-    }
-    searchParams: {
+    }>
+    searchParams: Promise<{
         page?: string
-    }
+    }>
 }
 
-export default function CategoryPage({ params, searchParams }: CategoryPageProps) {
+export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
+    const { category } = await params
+    const { page } = await searchParams
+
     // 验证分类是否有效
-    if (!Object.keys(CATEGORY_MAP).includes(params.category)) {
+    if (!Object.keys(CATEGORY_MAP).includes(category)) {
         notFound()
     }
 
     // 获取当前分类的所有文章
     const categoryPosts = allPosts
-        .filter((post) => post.category === params.category)
+        .filter((post) => post.category === category)
         .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
 
     // 分页逻辑
-    const currentPage = Number(searchParams.page) || 1
+    const currentPage = Number(page) || 1
     const totalPages = Math.ceil(categoryPosts.length / POSTS_PER_PAGE)
     const paginatedPosts = categoryPosts.slice(
         (currentPage - 1) * POSTS_PER_PAGE,
@@ -41,7 +44,7 @@ export default function CategoryPage({ params, searchParams }: CategoryPageProps
             <div className="py-6 sm:py-12 lg:py-16">
                 <Breadcrumb />
                 <CategoryPageContent
-                    category={params.category}
+                    category={category}
                     posts={paginatedPosts}
                     currentPage={currentPage}
                     totalPages={totalPages}

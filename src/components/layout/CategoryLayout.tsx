@@ -3,7 +3,7 @@
 import { format, parseISO } from 'date-fns'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Post } from 'contentlayer/generated'
+import { Post } from 'contentlayer2/generated'
 import { getCategoryName, CATEGORY_MAP } from '@/lib/images'
 import { PostRoute } from '@/lib/routes'
 

@@ -1,4 +1,4 @@
-import { Post } from 'contentlayer/generated'
+import { Post } from 'contentlayer2/generated'
 import { compareDesc } from 'date-fns'
 
 /**

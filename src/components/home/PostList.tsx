@@ -1,4 +1,4 @@
-import { Post } from 'contentlayer/generated'
+import { Post } from 'contentlayer2/generated'
 import { PostCard } from '@/components/common/PostCard'
 
 interface PostListProps {

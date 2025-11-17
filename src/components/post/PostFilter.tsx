@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useCallback } from 'react'
-import { allPosts } from 'contentlayer/generated'
-import { Post } from 'contentlayer/generated'
+import { allPosts } from 'contentlayer2/generated'
+import { Post } from 'contentlayer2/generated'
 
 type FilterProps = {
   onFilter: (posts: Post[]) => void
