@@ -11,7 +11,6 @@ export const PostContent = ({ children }: PostContentProps) => {
             prose-a:text-blue-500 prose-a:no-underline hover:prose-a:text-blue-600
             prose-strong:text-gray-900 dark:prose-strong:text-gray-100
             prose-code:text-blue-500 dark:prose-code:text-blue-400 prose-code:text-sm lg:prose-code:text-base
-            prose-pre:bg-gray-900 prose-pre:rounded-lg
             prose-img:rounded-lg prose-img:shadow-lg
             prose-blockquote:border-l-4 prose-blockquote:border-gray-200 dark:prose-blockquote:border-gray-800 prose-blockquote:pl-4 prose-blockquote:italic">
             {children}

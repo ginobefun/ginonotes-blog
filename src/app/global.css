@@ -170,7 +170,8 @@
 }
 
 .prose pre {
-    @apply border border-neutral-800 rounded-lg overflow-x-auto;
+    @apply border border-neutral-300 dark:border-neutral-800 rounded-lg overflow-x-auto;
+    @apply bg-neutral-50 dark:bg-neutral-900;
 }
 
 .prose code {
@@ -222,7 +223,9 @@
 }
 
 [data-rehype-pretty-code-title] {
-    @apply mt-4 px-4 py-3 font-mono text-xs font-medium border rounded-t-lg text-neutral-200 border-neutral-700 bg-neutral-800;
+    @apply mt-4 px-4 py-3 font-mono text-xs font-medium border rounded-t-lg;
+    @apply text-neutral-700 border-neutral-300 bg-neutral-100;
+    @apply dark:text-neutral-200 dark:border-neutral-700 dark:bg-neutral-800;
 }
 
 [data-rehype-pretty-code-title]+pre {
