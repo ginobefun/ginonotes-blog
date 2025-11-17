@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "contentlayer2 build && next build",
     "start": "next start",
     "lint": "next lint",
-    "upload-media": "tsx scripts/uploadMedia.ts"
+    "upload-media": "tsx scripts/uploadMedia.ts",
+    "postinstall": "contentlayer2 build"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.740.0",
