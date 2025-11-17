@@ -11,6 +11,7 @@ import { PostFooter } from '@/components/post/PostFooter'
 import { Breadcrumb } from '@/components/navigation/Breadcrumb'
 import { getCategoryName } from '@/lib/images'
 import { createCategoryRoute } from '@/lib/routes'
+import { Comments } from '@/components/post/Comments'
 
 interface PostProps {
     params: Promise<{
@@ -124,6 +125,14 @@ export default async function PostPage({ params }: PostProps) {
                                         category={post.category}
                                         categoryPostsCount={categoryPosts.length}
                                     />
+                                </div>
+
+                                {/* 评论区 */}
+                                <div className="mt-16 pt-16 border-t border-gray-200 dark:border-gray-800">
+                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8">
+                                        评论
+                                    </h2>
+                                    <Comments />
                                 </div>
                             </div>
                         </main>

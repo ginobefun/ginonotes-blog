@@ -5,6 +5,7 @@ import { PostRoute } from '@/lib/routes'
 import { Search as SearchIcon } from 'lucide-react'
 import { getCategoryName, CATEGORY_MAP } from '@/lib/images'
 import { format, parseISO } from 'date-fns'
+import Fuse from 'fuse.js'
 
 interface SearchDialogProps {
   isOpen: boolean
@@ -14,6 +15,22 @@ interface SearchDialogProps {
 
 export function SearchDialog({ isOpen, onClose, onOpen }: SearchDialogProps) {
   const [query, setQuery] = useState('')
+
+  // 初始化 Fuse.js 搜索引擎
+  const fuse = useMemo(() => {
+    return new Fuse(allPosts, {
+      keys: [
+        { name: 'title', weight: 0.5 },
+        { name: 'description', weight: 0.3 },
+        { name: 'tags', weight: 0.15 },
+        { name: 'category', weight: 0.05 },
+      ],
+      threshold: 0.3,
+      includeScore: true,
+      minMatchCharLength: 2,
+      ignoreLocation: true,
+    })
+  }, [])
 
   // 重置搜索状态
   useEffect(() => {
@@ -39,21 +56,13 @@ export function SearchDialog({ isOpen, onClose, onOpen }: SearchDialogProps) {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, onClose, onOpen])
 
-  // 使用 useMemo 优化搜索结果计算
+  // 使用 Fuse.js 进行模糊搜索
   const results = useMemo(() => {
-    if (!query) return []
-    return allPosts
-      .filter((post) => {
-        const searchContent = [
-          post.title,
-          post.description,
-          post.category,
-          post.tags
-        ].filter(Boolean).join(' ')
-        return searchContent.toLowerCase().includes(query.toLowerCase())
-      })
-      .slice(0, 8)
-  }, [query])
+    if (!query || query.trim().length < 2) return []
+
+    const searchResults = fuse.search(query)
+    return searchResults.slice(0, 8).map(result => result.item)
+  }, [query, fuse])
 
   if (!isOpen) return null
 

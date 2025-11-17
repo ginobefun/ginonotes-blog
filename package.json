@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.740.0",
+    "@giscus/react": "^3.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@types/glob": "^8.1.0",
     "@types/node": "^22.10.5",
@@ -28,6 +29,7 @@
     "eslint": "^9.18.0",
     "eslint-config-next": "16.0.0",
     "framer-motion": "^11.15.0",
+    "fuse.js": "^7.1.0",
     "glob": "^11.0.1",
     "lucide-react": "^0.468.0",
     "next": "^16.0.0",
