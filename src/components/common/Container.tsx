@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'default'
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'default'
 }
 
 const sizeMap = {
@@ -9,6 +9,8 @@ const sizeMap = {
   md: 'max-w-3xl',    // 768px - 适合文章阅读（最佳阅读宽度）
   lg: 'max-w-4xl',    // 896px - 适合关于页、表单页等
   xl: 'max-w-5xl',    // 1024px - 适合列表页、分类页
+  '2xl': 'max-w-6xl', // 1152px - 适合带侧边栏的文章页
+  '3xl': 'max-w-7xl', // 1280px - 适合宽屏文章阅读
   default: 'max-w-5xl' // 1024px - 默认使用 xl，适合大多数页面
 }
 

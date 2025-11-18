@@ -100,12 +100,12 @@ export default async function PostPage({ params }: PostProps) {
     return (
         <div className="relative w-full min-h-screen">
             <ReadingProgress />
-            <Container>
+            <Container size="3xl">
                 <div className="py-6 sm:py-10 lg:py-12">
                     <Breadcrumb customItems={breadcrumbItems} />
-                    <div className="grid grid-cols-1 xl:grid-cols-[1fr_280px] gap-12">
-                        {/* 主内容区 - 最佳阅读宽度 */}
-                        <main className="min-w-0 max-w-3xl">
+                    <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,_1fr)_280px] gap-12 xl:gap-16">
+                        {/* 主内容区 - 宽屏下约 900px，提供更舒适的中文阅读体验 */}
+                        <main className="min-w-0 w-full">
                             <article>
                                 <PostHeader
                                     title={post.title}
