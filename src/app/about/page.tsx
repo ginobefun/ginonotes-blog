@@ -99,12 +99,11 @@ const contacts = [
 
 export default function About() {
     return (
-        <Container size="default">
+        <Container size="lg">
             <div className="py-6 sm:py-10 lg:py-12">
                 <Breadcrumb />
-                <div className="max-w-3xl">
-                    {/* 头部介绍 */}
-                    <div>
+                {/* 头部介绍 */}
+                <div>
                     <h1 className="bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl">
                         Just be funny~
                     </h1>
@@ -208,7 +207,6 @@ export default function About() {
                             立即订阅
                         </a>
                     </div>
-                </div>
                 </div>
             </div>
         </Container>

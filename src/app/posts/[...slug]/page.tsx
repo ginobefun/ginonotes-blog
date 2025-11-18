@@ -100,49 +100,47 @@ export default async function PostPage({ params }: PostProps) {
     return (
         <div className="relative w-full min-h-screen">
             <ReadingProgress />
-            <Container size="default">
+            <Container>
                 <div className="py-6 sm:py-10 lg:py-12">
                     <Breadcrumb customItems={breadcrumbItems} />
-                    <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,_1fr)_240px] gap-10">
-                        {/* 中间内容区 */}
-                        <main className="min-w-0">
-                            <div className="max-w-3xl">
-                                <article>
-                                    <PostHeader
-                                        title={post.title}
-                                        date={post.date}
-                                        readingTime={readingTime}
-                                        category={post.category}
-                                    />
-                                    <div className="prose prose-lg dark:prose-invert max-w-none">
-                                        <PostContent>
-                                            <Content />
-                                        </PostContent>
-                                    </div>
-                                </article>
-
-                                <div className="mt-16">
-                                    <PostFooter
-                                        tags={post.tags}
-                                        recommendedPosts={recommendedPosts}
-                                        category={post.category}
-                                        categoryPostsCount={categoryPosts.length}
-                                    />
+                    <div className="grid grid-cols-1 xl:grid-cols-[1fr_280px] gap-12">
+                        {/* 主内容区 - 最佳阅读宽度 */}
+                        <main className="min-w-0 max-w-3xl">
+                            <article>
+                                <PostHeader
+                                    title={post.title}
+                                    date={post.date}
+                                    readingTime={readingTime}
+                                    category={post.category}
+                                />
+                                <div className="prose prose-lg dark:prose-invert max-w-none">
+                                    <PostContent>
+                                        <Content />
+                                    </PostContent>
                                 </div>
+                            </article>
 
-                                {/* 评论区 */}
-                                <div className="mt-16 pt-16 border-t border-gray-200 dark:border-gray-800">
-                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8">
-                                        评论
-                                    </h2>
-                                    <Comments />
-                                </div>
+                            <div className="mt-16">
+                                <PostFooter
+                                    tags={post.tags}
+                                    recommendedPosts={recommendedPosts}
+                                    category={post.category}
+                                    categoryPostsCount={categoryPosts.length}
+                                />
+                            </div>
+
+                            {/* 评论区 */}
+                            <div className="mt-16 pt-16 border-t border-gray-200 dark:border-gray-800">
+                                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8">
+                                    评论
+                                </h2>
+                                <Comments />
                             </div>
                         </main>
 
                         {/* 右侧目录 */}
                         <aside className="hidden xl:block">
-                            <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto pr-3 py-4">
+                            <div className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto py-4">
                                 <TableOfContents headings={headings} />
                             </div>
                         </aside>
