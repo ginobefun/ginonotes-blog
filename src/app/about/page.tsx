@@ -99,7 +99,7 @@ const contacts = [
 
 export default function About() {
     return (
-        <Container size="lg">
+        <Container size="2xl">
             <div className="py-6 sm:py-10 lg:py-12">
                 <Breadcrumb />
                 {/* 头部介绍 */}

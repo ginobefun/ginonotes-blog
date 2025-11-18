@@ -40,7 +40,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
     )
 
     return (
-        <Container>
+        <Container size="2xl">
             <div className="py-6 sm:py-10 lg:py-12">
                 <Breadcrumb />
                 <CategoryPageContent
