@@ -108,11 +108,21 @@ export default function About() {
                         Just be funny~
                     </h1>
                     <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
-                        👋 你好！我是一名开发工程师，负责架构设计和核心功能开发。在空闲时间，我会研究人工智能和 Web3 项目，同时运营着
+                        👋 你好！我是 Gino，2011 年研究生毕业后，在通信、电商、证券等头部企业工作了将近 15 年。
+                        主要负责后端开发、架构设计和稳定性保障等工作，经历过高并发、大流量系统的各种挑战。
+                    </p>
+                    <p className="mt-4 text-lg leading-8 text-gray-600 dark:text-gray-400">
+                        最近这两年，我把更多精力投入到 AI 领域，特别是 AI Agent 的开发实践、AI Coding 工具的探索，以及各类 AI 产品的体验和评测。
+                        同时也在学习产品思维和运营能力，希望能将技术和产品更好地结合起来。虽然主攻后端，但也具备一定的全栈能力，
+                        业余时间喜欢折腾一些有趣的事情。
+                    </p>
+                    <p className="mt-4 text-lg leading-8 text-gray-600 dark:text-gray-400">
+                        目前在运营
                         <a href="https://bestblogs.dev" target="_blank" rel="noopener noreferrer" className="px-1 text-blue-500 hover:text-blue-600">
                             bestblogs.dev
                         </a>
-                        ，每周发送 AI 精选文章，目前已有超过 3000 位订阅者。我相信技术不仅仅是工具，更是创造价值和改变世界的力量。
+                        ，每周精选高质量的 AI 文章，已有超过 4000 位订阅者。通过 BestBlogs，我希望帮助更多人跟上 AI 的发展节奏，
+                        同时也在思考如何将 AI Agent 能力融入产品中，让信息筛选和推荐变得更智能。
                     </p>
                 </div>
 
@@ -120,7 +130,8 @@ export default function About() {
                 <div className="mt-16">
                     <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">技术栈</h2>
                     <p className="mt-4 text-gray-600 dark:text-gray-400">
-                        我专注于构建高性能、高并发、高稳定性的系统。同时具备全栈开发能力，能够独立完成项目开发。
+                        近 15 年的工作经历让我积累了丰富的后端开发经验，专注于构建高性能、高并发、高稳定性的系统。
+                        同时也具备全栈开发能力，最近重点关注 AI Agent、RAG 和 Workflow 等 AI 应用的开发。
                     </p>
                     <div className="mt-8 flex flex-wrap gap-6">
                         {skills.map((skill) => (
@@ -155,10 +166,14 @@ export default function About() {
 
                 {/* 博客目的 */}
                 <div className="mt-16">
-                    <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">关于博客</h2>
+                    <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">关于这个博客</h2>
                     <p className="mt-4 text-gray-600 dark:text-gray-400">
-                        这里是我的数字花园，记录日常学习和思考的内容。你可以找到关于编程技术、人工智能、产品设计的文章，
-                        也可以看到我的阅读笔记和生活随想。希望这些内容能够帮助到你，也欢迎与我交流讨论。
+                        这里是我的数字花园，主要记录在 AI 领域的学习和实践。你会看到关于 AI Agent 设计模式、认知架构、工具使用的深度文章，
+                        也会看到我对各种 AI Coding 工具（如 Cursor、Claude Code、Codex）的使用体验，以及对最新 AI 产品和模型的评测。
+                    </p>
+                    <p className="mt-4 text-gray-600 dark:text-gray-400">
+                        除了技术内容，你也能找到我的阅读笔记和一些思考随笔。我相信写作是最好的学习方式，通过输出来倒逼输入，
+                        通过分享来深化理解。希望这些内容对你有所帮助，也欢迎通过下面的方式与我交流。
                     </p>
                 </div>
 
@@ -193,10 +208,14 @@ export default function About() {
                 <div className="mt-16">
                     <div className="rounded-2xl bg-blue-50 p-6 dark:bg-blue-900/20">
                         <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100">
-                            📬 免费订阅我的 AI 周刊
+                            📬 订阅 BestBlogs AI 周刊
                         </h3>
                         <p className="mt-2 text-blue-800 dark:text-blue-200">
-                            每周精选高质量的 AI 文章，帮助你跟上人工智能的最新发展。已有超过 4000 位读者订阅，欢迎加入我们！
+                            每周精选高质量的 AI 文章，覆盖 AI Agent、大模型、AI 应用等领域。已有超过 4000 位读者订阅。
+                        </p>
+                        <p className="mt-2 text-blue-800 dark:text-blue-200">
+                            接下来我计划为 BestBlogs 引入 AI Agent 能力，让它能更智能地理解你的阅读偏好，提供个性化的文章推荐。
+                            如果你对这个方向感兴趣，欢迎订阅并与我交流想法！
                         </p>
                         <a
                             href="https://www.bestblogs.dev/#subscribe"
