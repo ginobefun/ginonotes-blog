@@ -94,7 +94,7 @@ export const metadata: Metadata = {
         ],
         apple: `${WEBSITE_HOST_URL}/apple-icon`,
     },
-    manifest: `${WEBSITE_HOST_URL}/manifest.json`,
+    manifest: '/manifest.webmanifest',
 }
 
 export default function RootLayout({
@@ -105,9 +105,7 @@ export default function RootLayout({
     return (
         <html lang={WEBSITE_LANGUAGE} suppressHydrationWarning>
             <head>
-                <link rel="manifest" href={`${WEBSITE_HOST_URL}/manifest.json`} />
                 <meta name="theme-color" content="#ffffff" />
-                <link rel="apple-touch-icon" href={`${WEBSITE_HOST_URL}/apple-icon`} />
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

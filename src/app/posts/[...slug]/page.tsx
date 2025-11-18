@@ -54,11 +54,14 @@ function stripMarkdownLinks(text: string): string {
 }
 
 function extractHeadings(content: string) {
+    // 先移除代码块，避免提取代码块内的标题
+    const contentWithoutCodeBlocks = content.replace(/```[\s\S]*?```/g, '')
+
     const headingRegex = /^#{2,4}\s+(.+)$/gm
     const headings: { level: number; text: string }[] = []
     let match
 
-    while ((match = headingRegex.exec(content)) !== null) {
+    while ((match = headingRegex.exec(contentWithoutCodeBlocks)) !== null) {
         const text = stripMarkdownLinks(match[1])
         const level = match[0].split('#').length - 1
         headings.push({ level, text })

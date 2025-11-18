@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     icon: '/icon',
     shortcut: '/icon',
   },
-  manifest: '/manifest.json',
+  manifest: '/manifest.webmanifest',
   viewport: {
     width: 'device-width',
     initialScale: 1,
