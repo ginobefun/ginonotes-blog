@@ -71,7 +71,7 @@ const contacts = [
     {
         icon: FaWeixin,
         name: '微信',
-        value: 'xingxing174556571',
+        value: 'ginobot',
         color: 'text-green-500',
     },
     {
@@ -121,7 +121,7 @@ export default function About() {
                         <a href="https://bestblogs.dev" target="_blank" rel="noopener noreferrer" className="px-1 text-blue-500 hover:text-blue-600">
                             bestblogs.dev
                         </a>
-                        ，每周精选高质量的 AI 文章，已有超过 4000 位订阅者。通过 BestBlogs，我希望帮助更多人跟上 AI 的发展节奏，
+                        ，每周精选高质量的 AI 文章，已有超过 8000 位订阅者。通过 BestBlogs，我希望帮助更多人跟上 AI 的发展节奏，
                         同时也在思考如何将 AI Agent 能力融入产品中，让信息筛选和推荐变得更智能。
                     </p>
                 </div>
@@ -211,7 +211,7 @@ export default function About() {
                             📬 订阅 BestBlogs AI 周刊
                         </h3>
                         <p className="mt-2 text-blue-800 dark:text-blue-200">
-                            每周精选高质量的 AI 文章，覆盖 AI Agent、大模型、AI 应用等领域。已有超过 4000 位读者订阅。
+                            每周精选高质量的 AI 文章，覆盖 AI Agent、大模型、AI 应用等领域。已有超过 8000 位读者订阅。
                         </p>
                         <p className="mt-2 text-blue-800 dark:text-blue-200">
                             接下来我计划为 BestBlogs 引入 AI Agent 能力，让它能更智能地理解你的阅读偏好，提供个性化的文章推荐。
