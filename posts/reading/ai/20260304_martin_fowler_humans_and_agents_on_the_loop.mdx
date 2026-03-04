@@ -12,8 +12,8 @@ slug: martin-fowler-humans-and-agents-on-the-loop
 
 > 引言：Vibe Coding 浪潮席卷开发者社区之后，一个核心争论始终没有平息：人类到底该在 AI 编程中扮演什么角色——放手让 Agent 全权处理，还是紧盯每一行生成的代码？
 > Martin Fowler 在这篇文章中给出了一个更精准的框架。他把软件开发拆解为两个循环：Why 循环关注我们为什么要做这件事，How 循环关注具体怎么做。在此基础上，他提出了人类参与的三种模式：人在环外（Out of the Loop）、人在环中（In the Loop）和人在环上（On the Loop）。
-> 其中最有启发性的是人在环上这种模式，其核心思路是：与其逐行审查 Agent 的代码产出，不如去构建和优化指导 Agent 工作的驾驭体系（Harness Engineering），包括需求定义、质量检查和工作流指引。当产出不符合预期时，不是去修产出本身，而是去改进产出它的那套机制本身。
-> 这个视角让我想到我们在使用 Claude Code 等工具时经常遇到的困境：是手动修复 Agent 生成的问题代码效率更高，还是花时间完善 prompt 和 CLAUDE.md 文件更值得？Fowler 的回答很清晰，后者才是可持续的路径，而且这条路径最终能演化成一个自我改进的飞轮。
+> 其中最有启发性的是人在环上这种模式，其核心思路是：与其逐行审查 Agent 的代码产出，不如去构建和优化指导 Agent 工作的驾驭体系（Harness Engineering），包括 Spec 定义、质量检查和工作流指引。当产出不符合预期时，不是直接去修改产出内容，而是去改进产出它的那套机制。
+> 这个视角让我想到在使用 Claude Code 开发出现 Bug 时，经常纠结是手动修复生成的问题代码，还是花时间去完善提示词 和 CLAUDE.md 等规则文件？Martin Fowler 的建议是后者，因为这才是可持续的路径，而且最终能演化成一个自我持续改进的飞轮。
 > 推荐所有正在探索 AI 编程工作流的开发者阅读。
 
 ![Martin Fowler：软件开发中的协作模式](https://image.jido.dev/Banana/Gemini_Generated_Image_2q1u5m2q1u5m2q1u.png)
@@ -30,7 +30,7 @@ slug: martin-fowler-humans-and-agents-on-the-loop
 
 ![Why 循环和 How 循环](https://media.ginonotes.com/images/20260304_martin_fowler_humans_and_agents_on_the_loop/humans-agents-image1.png)
 
-> 图 1：Why 循环围绕想法和软件进行迭代，How 循环围绕构建软件的中间产物进行迭代。上层 Why 循环连接着下层 How 循环，Why 循环在想法与可运行软件之间迭代，How 循环在规格、代码、测试等中间产物之间迭代。
+> 图 1：Why 循环围绕想法和软件进行迭代，How 循环围绕构建软件的中间产物进行迭代。上层 Why 循环连接着下层 How 循环，Why 循环在想法与可运行软件之间迭代，How 循环在规约说明、代码、测试等中间产物之间迭代。
 
 实际上 How 循环内部包含多个层级。最外层负责按照 Why 循环的要求交付完整的可运行软件，最内层负责生成和测试代码。中间的层级把上层的大任务拆解成更小的任务交给下层执行，再验证结果。
 
@@ -72,7 +72,7 @@ slug: martin-fowler-humans-and-agents-on-the-loop
 
 当人们说人在环中（Human in the Loop）时，通常指的是人类在代码生成的最内层循环中充当把关者，比如手动检查 LLM 生成的每一行代码。
 
-但过度深入参与会带来一个问题：人类会变成瓶颈。Agent 生成代码的速度远快于人类手动审查的速度。关于 AI 对开发者生产力影响的报告结论不一，部分原因可能在于，人类花在编写规格和审查代码上的时间，反而比 LLM 帮我们节省下来的编码时间还多。
+但过度深入参与会带来一个问题：人类会变成瓶颈。Agent 生成代码的速度远快于人类手动审查的速度。关于 AI 对开发者生产力影响的报告结论不一，部分原因可能在于，人类花在编写规约说明和审查代码上的时间，反而比 LLM 帮我们节省下来的编码时间还多。
 
 我们需要采用经典的左移（Shift Left）思维。过去我们先写完所有代码，再交给 QA 团队测试，然后试着修够多的 Bug 来发布一个版本。后来我们发现，让开发者在编码过程中自己编写和运行测试，能立即发现和修复问题，整个流程因此变得更快、更可靠。
 
@@ -80,11 +80,11 @@ slug: martin-fowler-humans-and-agents-on-the-loop
 
 ## 人在环上（Humans on the Loop）
 
-与其亲自检查 Agent 的产出，不如让它们更擅长产出。那套控制 How 循环各层级的规格、质量检查和工作流指引，就是 Agent 的驾驭体系（Harness）。构建和维护这套体系的实践叫做驾驭工程（Harness Engineering），也就是人类在环上工作的核心方式。
+与其亲自检查 Agent 的产出，不如让它们更擅长产出。那套控制 How 循环各层级的规约说明、质量检查和工作流指引，就是 Agent 的驾驭体系（Harness）。构建和维护这套体系的实践叫做驾驭工程（Harness Engineering），也就是人类在环上工作的核心方式。
 
 ![人在环上（Humans on the Loop）](https://media.ginonotes.com/images/20260304_martin_fowler_humans_and_agents_on_the_loop/humans-agents-image5.png)
 
-> 图 5：人类定义 How 循环，Agent 执行 How 循环。上层 Why 循环连接着下层 How 循环，连接点是人类。Agent 位于下层 How 循环的底部，在规格和代码等中间产物之间迭代。
+> 图 5：人类定义 How 循环，Agent 执行 How 循环。上层 Why 循环连接着下层 How 循环，连接点是人类。Agent 位于下层 How 循环的底部，在规约说明和代码等中间产物之间迭代。
 
 类似人在环上的概念也被称为中间循环（Middle Loop），The Future of Software Development Retreat 研讨会的参与者就使用过这个说法。中间循环指的是把人类的注意力从编码层提升到更高层级的循环。
 
@@ -98,7 +98,7 @@ slug: martin-fowler-humans-and-agents-on-the-loop
 
 ![人类引导 Agent 来构建和改进 How 循环](https://media.ginonotes.com/images/20260304_martin_fowler_humans_and_agents_on_the_loop/humans-agents-image6.png)
 
-> 图 6：人类引导 Agent 来构建和改进 How 循环。上层 Why 循环通过人类和 Agent 共同连接到下层 How 循环。Why 循环在想法与可运行软件之间迭代，How 循环在规格等中间产物之间迭代。
+> 图 6：人类引导 Agent 来构建和改进 How 循环。上层 Why 循环通过人类和 Agent 共同连接到下层 How 循环。Why 循环在想法与可运行软件之间迭代，How 循环在规约说明等中间产物之间迭代。
 
 构建飞轮的方式是为 Agent 提供评估循环表现所需的信息。一个好的起点是驾驭体系中已有的测试和评估。当我们输入更丰富的信号时，飞轮会变得更强大。比如添加衡量性能和验证故障场景的流水线阶段，输入生产环境的运维数据、用户旅程日志和商业结果，来拓宽 Agent 分析的范围和深度。
 
