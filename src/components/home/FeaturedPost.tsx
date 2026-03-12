@@ -75,6 +75,7 @@ export function FeaturedPost({ post }: FeaturedPostProps) {
                         src={post.cover || `/images/categories/${post.category}.jpg`}
                         alt={post.title}
                         fill
+                        sizes="(max-width: 1024px) 100vw, 420px"
                         className="object-cover transition duration-300 group-hover:scale-105"
                         priority
                     />

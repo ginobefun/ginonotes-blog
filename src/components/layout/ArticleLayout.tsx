@@ -6,6 +6,7 @@ import { Post } from 'contentlayer2/generated'
 import { getCategoryName, CATEGORY_MAP } from '@/lib/images'
 import { useMDXComponent } from 'next-contentlayer2/hooks'
 import { TableOfContents } from '@/components/post/TableOfContents'
+import { FloatingActions } from '@/components/post/FloatingActions'
 import { PostRoute, createTagRoute } from '@/lib/routes'
 import { useEffect, useState, useRef } from 'react'
 
@@ -60,7 +61,7 @@ export function ArticleLayout({ post, prevPost, nextPost }: ArticleLayoutProps) 
           {/* 文章布局 */}
           <div className="grid grid-cols-1 lg:grid-cols-[1fr,280px] gap-8 items-start">
             {/* 文章内容 */}
-            <div ref={contentRef} className="min-w-0 w-full prose prose-gray dark:prose-invert 
+            <div ref={contentRef} className="article-content min-w-0 w-full prose prose-gray dark:prose-invert 
               prose-headings:scroll-mt-20
               prose-h2:text-2xl prose-h2:font-semibold prose-h2:mb-6 prose-h2:mt-12 lg:prose-h2:text-3xl
               prose-h3:text-xl prose-h3:font-medium prose-h3:mb-4 prose-h3:mt-8 lg:prose-h3:text-2xl
@@ -75,13 +76,16 @@ export function ArticleLayout({ post, prevPost, nextPost }: ArticleLayoutProps) 
               <MDXContent />
             </div>
 
-            {/* 目录导航 */}
+            {/* 目录导航 - 桌面端 */}
             <aside className="hidden lg:block">
               <div className="sticky top-20 w-full">
                 <TableOfContents headings={headings} />
               </div>
             </aside>
           </div>
+
+          {/* 移动端浮动操作（TOC + 回到顶部） */}
+          <FloatingActions headings={headings} />
 
           {/* 文章页脚 */}
           <footer className="mt-12 md:mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">

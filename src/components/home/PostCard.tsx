@@ -12,12 +12,13 @@ export function PostCard({ post }: PostCardProps) {
   const categoryName = getCategoryName(post.category as keyof typeof CATEGORY_MAP)
 
   return (
-    <article className="relative flex flex-col overflow-hidden rounded-2xl bg-white/50 shadow-md dark:bg-gray-800/50">
+    <article className="relative flex flex-col overflow-hidden rounded-2xl bg-white/50 shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg dark:bg-gray-800/50">
       <Link href={post.url as `/posts/${string}/${string}`} className="relative aspect-[2/1] overflow-hidden">
         <Image
           src={post.cover || `/images/categories/${post.category}.jpg`}
           alt={post.title}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover"
         />
       </Link>

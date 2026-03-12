@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { allPosts } from 'contentlayer2/generated'
 import Link from 'next/link'
 import { PostRoute } from '@/lib/routes'
@@ -7,18 +7,12 @@ import { getCategoryName, CATEGORY_MAP } from '@/lib/images'
 import { format, parseISO } from 'date-fns'
 import Fuse from 'fuse.js'
 
-interface SearchDialogProps {
-  isOpen: boolean
-  onClose: () => void
-  onOpen: () => void
-}
+// 模块级别单例，避免每次组件 mount 重建索引
+let fuseInstance: Fuse<(typeof allPosts)[number]> | null = null
 
-export function SearchDialog({ isOpen, onClose, onOpen }: SearchDialogProps) {
-  const [query, setQuery] = useState('')
-
-  // 初始化 Fuse.js 搜索引擎
-  const fuse = useMemo(() => {
-    return new Fuse(allPosts, {
+function getFuseInstance() {
+  if (!fuseInstance) {
+    fuseInstance = new Fuse(allPosts, {
       keys: [
         { name: 'title', weight: 0.5 },
         { name: 'description', weight: 0.3 },
@@ -30,11 +24,27 @@ export function SearchDialog({ isOpen, onClose, onOpen }: SearchDialogProps) {
       minMatchCharLength: 2,
       ignoreLocation: true,
     })
-  }, [])
+  }
+  return fuseInstance
+}
 
-  // 重置搜索状态
+interface SearchDialogProps {
+  isOpen: boolean
+  onClose: () => void
+  onOpen: () => void
+}
+
+export function SearchDialog({ isOpen, onClose, onOpen }: SearchDialogProps) {
+  const [query, setQuery] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
+  const fuse = getFuseInstance()
+
+  // 打开时聚焦输入框，关闭时重置搜索
   useEffect(() => {
-    if (!isOpen) {
+    if (isOpen) {
+      // 延迟聚焦以确保 DOM 可见
+      requestAnimationFrame(() => inputRef.current?.focus())
+    } else {
       setQuery('')
     }
   }, [isOpen])
@@ -64,10 +74,8 @@ export function SearchDialog({ isOpen, onClose, onOpen }: SearchDialogProps) {
     return searchResults.slice(0, 8).map(result => result.item)
   }, [query, fuse])
 
-  if (!isOpen) return null
-
   return (
-    <div className="fixed inset-0 z-[999]">
+    <div className={`fixed inset-0 z-[999] ${isOpen ? '' : 'pointer-events-none hidden'}`}>
       {/* 遮罩层 */}
       <div 
         className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm"
@@ -81,12 +89,12 @@ export function SearchDialog({ isOpen, onClose, onOpen }: SearchDialogProps) {
           <div className="flex items-center gap-3 border-b border-gray-200 dark:border-gray-800 px-4 sm:px-6">
             <SearchIcon className="h-6 w-6 text-gray-400" />
             <input
+              ref={inputRef}
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="搜索文章..."
               className="w-full bg-transparent py-4 text-lg sm:text-xl text-gray-900 placeholder-gray-400 focus:outline-none dark:text-gray-100"
-              autoFocus
             />
             <kbd className="hidden sm:block rounded bg-gray-100 px-2 py-0.5 font-mono text-sm font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400">
               ESC
@@ -146,4 +154,4 @@ export function SearchDialog({ isOpen, onClose, onOpen }: SearchDialogProps) {
       </div>
     </div>
   )
-} 
+}

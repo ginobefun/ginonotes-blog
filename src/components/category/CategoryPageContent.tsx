@@ -4,6 +4,7 @@ import { Post } from 'contentlayer2/generated'
 import { PostCard } from '@/components/common/PostCard'
 import { motion } from 'framer-motion'
 import { getCategoryName, CATEGORY_MAP } from '@/lib/images'
+import Link from 'next/link'
 
 const container = {
   hidden: { opacity: 0 },
@@ -76,7 +77,7 @@ export function CategoryPageContent({
           className="mt-12 flex justify-center gap-2"
         >
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <a
+            <Link
               key={page}
               href={`/categories/${category}?page=${page}`}
               className={`inline-flex h-10 w-10 items-center justify-center rounded-lg ${
@@ -86,7 +87,7 @@ export function CategoryPageContent({
               }`}
             >
               {page}
-            </a>
+            </Link>
           ))}
         </motion.div>
       )}
