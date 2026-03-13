@@ -12,6 +12,7 @@ import { Breadcrumb } from '@/components/navigation/Breadcrumb'
 import { getCategoryName } from '@/lib/images'
 import { createCategoryRoute } from '@/lib/routes'
 import { Comments } from '@/components/post/Comments'
+import { CopyCodeButton } from '@/components/post/CopyCodeButton'
 
 interface PostProps {
     params: Promise<{
@@ -113,11 +114,12 @@ export default async function PostPage({ params }: PostProps) {
                                     readingTime={readingTime}
                                     category={post.category}
                                 />
-                                <div className="prose prose-lg dark:prose-invert max-w-none">
+                                <div className="prose prose-lg dark:prose-invert max-w-3xl">
                                     <PostContent>
                                         <Content />
                                     </PostContent>
                                 </div>
+                                <CopyCodeButton />
                             </article>
 
                             <div className="mt-16">

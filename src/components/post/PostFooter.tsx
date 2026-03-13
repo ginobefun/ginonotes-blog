@@ -30,7 +30,7 @@ export const PostFooter = ({
                     {tags.split(',').map((tag) => (
                         <span
                             key={tag.trim()}
-                            className="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+                            className="inline-flex items-center rounded-md bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400"
                         >
                             {tag.trim()}
                         </span>
@@ -46,9 +46,9 @@ export const PostFooter = ({
                         <Link
                             key={post._id}
                             href={post.url as `/posts/${string}/${string}`}
-                            className="group block overflow-hidden rounded-lg border p-4 transition-colors hover:border-blue-500 dark:border-gray-800"
+                            className="group block overflow-hidden rounded-lg border p-4 transition-colors hover:border-ink dark:border-gray-800"
                         >
-                            <span className="block line-clamp-2 font-medium text-gray-900 group-hover:text-blue-500 dark:text-gray-100">
+                            <span className="block line-clamp-2 font-medium text-gray-900 group-hover:text-ink dark:text-gray-100">
                                 {post.title}
                             </span>
                             <time className="mt-2 block text-sm text-gray-500 dark:text-gray-400">
@@ -61,7 +61,7 @@ export const PostFooter = ({
                     <div className="text-center">
                         <Link
                             href={`/categories/${category}`}
-                            className="inline-flex items-center text-sm text-blue-500 hover:text-blue-600"
+                            className="inline-flex items-center text-sm text-ink hover:text-ink-light"
                         >
                             查看更多 {getCategoryName(category as keyof typeof CATEGORY_MAP)} 的文章
                             <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

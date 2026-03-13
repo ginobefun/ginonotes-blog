@@ -11,8 +11,8 @@ export function PostList({ posts }: PostListProps) {
     return (
         <section className="w-full">
             <div className="flex flex-col space-y-8">
-                <div className="flex items-center justify-between">
-                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+                <div className="flex items-center gap-3">
+                    <h2 className="text-xl font-semibold tracking-tight text-gray-700 dark:text-gray-300">
                         最新文章
                     </h2>
                 </div>

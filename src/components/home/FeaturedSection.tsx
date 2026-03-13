@@ -13,7 +13,10 @@ export function FeaturedSection({ post }: FeaturedSectionProps) {
         <section className="py-8">
             <Container>
                 <div className="space-y-8">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <span className="inline-flex items-center rounded-full bg-amber/20 px-2.5 py-0.5 text-xs font-semibold text-amber dark:bg-amber/20 dark:text-amber">
+                            精选
+                        </span>
                         <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
                             精选文章
                         </h2>

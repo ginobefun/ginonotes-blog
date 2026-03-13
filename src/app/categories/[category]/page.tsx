@@ -1,10 +1,11 @@
 import { allPosts } from 'contentlayer2/generated'
 import { compareDesc } from 'date-fns'
-import { CATEGORY_MAP } from '@/lib/images'
+import { CATEGORY_MAP, getCategoryName } from '@/lib/images'
 import { notFound } from 'next/navigation'
 import { CategoryPageContent } from '@/components/category/CategoryPageContent'
 import { Container } from '@/components/common/Container'
 import { Breadcrumb } from '@/components/navigation/Breadcrumb'
+import { WEBSITE_HOST_URL, WEBSITE_NAME } from '@/lib/constants'
 
 const POSTS_PER_PAGE = 10
 
@@ -39,8 +40,33 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         currentPage * POSTS_PER_PAGE
     )
 
+    // BreadcrumbList 结构化数据
+    const categoryName = getCategoryName(category as keyof typeof CATEGORY_MAP)
+    const breadcrumbJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            {
+                '@type': 'ListItem',
+                position: 1,
+                name: WEBSITE_NAME,
+                item: WEBSITE_HOST_URL,
+            },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: categoryName,
+                item: `${WEBSITE_HOST_URL}/categories/${category}`,
+            },
+        ],
+    }
+
     return (
         <Container size="2xl">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+            />
             <div className="py-6 sm:py-10 lg:py-12">
                 <Breadcrumb />
                 <CategoryPageContent

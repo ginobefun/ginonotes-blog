@@ -7,6 +7,15 @@
         --background: 0 0% 100%;
         --foreground: 222.2 84% 4.9%;
 
+        /* Brand: Ink + Amber + Paper (BestBlogs design language) */
+        --color-ink: #1a365d;
+        --color-ink-light: #2c5282;
+        --color-ink-dark: #1a202c;
+        --color-amber: #d97706;
+        --color-amber-light: #f59e0b;
+        --color-amber-muted: #fef3c7;
+        --bg-paper: #fefdfb;
+
         --card: 0 0% 100%;
         --card-foreground: 222.2 84% 4.9%;
 
@@ -41,6 +50,15 @@
     .dark {
         --background: 222.2 84% 4.9%;
         --foreground: 210 40% 98%;
+
+        /* Brand dark mode overrides */
+        --color-ink: #93c5fd;
+        --color-ink-light: #bfdbfe;
+        --color-ink-dark: #60a5fa;
+        --color-amber: #fbbf24;
+        --color-amber-light: #fcd34d;
+        --color-amber-muted: rgba(251, 191, 36, 0.15);
+        --bg-paper: #0f172a;
 
         --card: 222.2 84% 4.9%;
         --card-foreground: 210 40% 98%;
@@ -232,6 +250,57 @@
     @apply mt-0 rounded-t-none border-t-0;
 }
 
+/* Code block copy button */
+.copy-code-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid var(--border-default, #e2e8f0);
+    background: var(--bg-surface, rgba(255, 255, 255, 0.9));
+    color: var(--text-tertiary, #64748b);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 150ms, background 150ms, color 150ms;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+}
+
+[data-rehype-pretty-code-fragment]:hover .copy-code-button,
+pre:hover > .copy-code-button {
+    opacity: 1;
+}
+
+.copy-code-button:hover {
+    background: var(--bg-muted, #f1f5f9);
+    color: var(--text-primary, #1e293b);
+}
+
+.copy-code-button.copied {
+    color: #059669;
+    opacity: 1;
+}
+
+.dark .copy-code-button {
+    border-color: var(--border-default, #334155);
+    background: rgba(30, 41, 59, 0.9);
+    color: var(--text-tertiary, #94a3b8);
+}
+
+.dark .copy-code-button:hover {
+    background: var(--bg-muted, #334155);
+    color: var(--text-primary, #f1f5f9);
+}
+
+.dark .copy-code-button.copied {
+    color: #34d399;
+}
+
 /* Remove Safari input shadow on mobile */
 input[type='text'],
 input[type='email'] {
@@ -254,5 +323,16 @@ input[type='email'] {
     .ios-scroll {
         -webkit-overflow-scrolling: touch;
         overflow-y: auto;
+    }
+}
+
+/* Respect prefers-reduced-motion for CSS animations */
+@media (prefers-reduced-motion: reduce) {
+    .animate-blob,
+    .animate-float,
+    .animate-shimmer,
+    .animate-pulse,
+    .animate-bounce {
+        animation: none !important;
     }
 }

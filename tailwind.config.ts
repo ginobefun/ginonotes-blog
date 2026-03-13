@@ -10,6 +10,23 @@ const config: Config = {
   darkMode: 'class',
   theme: {
     extend: {
+      colors: {
+        ink: {
+          DEFAULT: '#1a365d',
+          light: '#2c5282',
+          dark: '#1a202c',
+        },
+        amber: {
+          DEFAULT: '#d97706',
+          light: '#f59e0b',
+          muted: '#fef3c7',
+        },
+        paper: {
+          DEFAULT: '#fefdfb',
+          warm: '#fdfaf6',
+          cream: '#faf7f2',
+        },
+      },
       fontFamily: {
         sans: [
           'Inter',
@@ -61,8 +78,10 @@ const config: Config = {
         lg: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
         xl: '0 25px 50px -12px rgb(0 0 0 / 0.25)',
         '2xl': '0 35px 60px -15px rgb(0 0 0 / 0.3)',
-        glow: '0 0 20px rgb(59 130 246 / 0.5)',
-        'glow-lg': '0 0 30px rgb(59 130 246 / 0.6)',
+        card: '0 1px 3px 0 rgba(26, 54, 93, 0.1), 0 1px 2px -1px rgba(26, 54, 93, 0.1)',
+        'card-hover': '0 4px 6px -1px rgba(26, 54, 93, 0.1), 0 2px 4px -2px rgba(26, 54, 93, 0.1)',
+        glow: '0 0 20px rgb(26 54 93 / 0.4)',
+        'glow-lg': '0 0 30px rgb(26 54 93 / 0.5)',
       },
       transitionDuration: {
         fast: '150ms',

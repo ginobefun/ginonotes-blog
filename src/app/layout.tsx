@@ -20,7 +20,6 @@ import {
 export const viewport: Viewport = {
     width: 'device-width',
     initialScale: 1,
-    maximumScale: 1,
 }
 
 // Metadata 配置
@@ -34,7 +33,7 @@ export const metadata: Metadata = {
     applicationName: WEBSITE_NAME,
     authors: [{ name: WEBSITE_AUTHOR, url: WEBSITE_HOST_URL }],
     generator: 'Next.js',
-    keywords: ['博客', '技术', '人工智能', '产品设计', '编程', 'Java', 'Workflow', 'Agent'],
+    keywords: ['AI Agent', 'AI Coding', 'LLM', 'RAG', '独立开发', 'Next.js', 'Java', 'Spring Boot', '产品设计', '技术博客'],
     referrer: 'origin-when-cross-origin',
     creator: WEBSITE_AUTHOR,
     publisher: WEBSITE_AUTHOR,

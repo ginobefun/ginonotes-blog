@@ -3,7 +3,7 @@
 import { Post } from 'contentlayer2/generated'
 import { format, parseISO } from 'date-fns'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { BlurImage } from './BlurImage'
 import { calculateReadingTime } from '@/lib/utils'
 import { getCategoryName, CATEGORY_MAP } from '@/lib/images'
@@ -15,14 +15,15 @@ interface PostCardProps extends Post {
 export function PostCard({ priority = false, ...post }: PostCardProps) {
     const readingTime = calculateReadingTime(post.body.raw)
     const tags = post.tags ? post.tags.split(',') : []
+    const prefersReducedMotion = useReducedMotion()
 
     return (
         <motion.article
-            whileHover={{ scale: 1.02 }}
+            whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
             className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl bg-white/50 shadow-md transition-all hover:shadow-xl dark:bg-gray-800/50"
         >
             {/* 渐变装饰 */}
-            <div className="absolute -right-8 -top-8 h-32 w-32 rotate-12 bg-gradient-to-br from-blue-500/10 to-emerald-500/10 blur-2xl transition-all group-hover:rotate-45" />
+            <div className="absolute -right-8 -top-8 h-32 w-32 rotate-12 bg-gradient-to-br from-ink/8 to-amber/8 blur-2xl transition-all group-hover:rotate-45" />
 
             {/* 内容区域 */}
             <div className="relative flex h-full flex-col space-y-4 p-6">
@@ -46,7 +47,7 @@ export function PostCard({ priority = false, ...post }: PostCardProps) {
                     <div className="space-y-3">
                         <Link
                             href={`/categories/${post.category}`}
-                            className="inline-flex w-fit items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 ring-1 ring-blue-100/50 transition-colors hover:bg-blue-200 dark:bg-blue-900/70 dark:text-blue-200 dark:ring-blue-900/50 dark:hover:bg-blue-900"
+                            className="inline-flex w-fit items-center rounded-full bg-ink/10 px-2.5 py-0.5 text-xs font-medium text-ink ring-1 ring-inset ring-ink/20 transition-colors hover:bg-ink/15 dark:bg-ink/20 dark:text-ink dark:ring-ink/30 dark:hover:bg-ink/30"
                         >
                             {getCategoryName(post.category as keyof typeof CATEGORY_MAP)}
                         </Link>
@@ -54,10 +55,10 @@ export function PostCard({ priority = false, ...post }: PostCardProps) {
                             href={post.url as `/posts/${string}/${string}`}
                             className="block space-y-3 focus:outline-none"
                         >
-                            <h2 className="line-clamp-2 text-xl font-bold text-gray-900 transition-colors group-hover:text-blue-500 dark:text-gray-100 dark:group-hover:text-blue-400">
+                            <h2 className="line-clamp-2 text-xl font-bold text-gray-900 transition-colors group-hover:text-ink dark:text-gray-100 dark:group-hover:text-ink">
                                 {post.title}
                             </h2>
-                            <p className="line-clamp-4 text-base md:text-lg text-gray-600 dark:text-gray-400">
+                            <p className="line-clamp-2 text-base text-gray-600 dark:text-gray-400">
                                 {post.description}
                             </p>
                         </Link>

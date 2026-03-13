@@ -100,7 +100,7 @@ export function Breadcrumb({ customItems, className = '' }: BreadcrumbProps) {
 
     return (
         <nav
-            className={`flex items-center text-sm text-gray-600 dark:text-gray-400 mb-6 ${className}`}
+            className={`flex items-center text-sm text-gray-500 dark:text-gray-400 mb-6 ${className}`}
             aria-label="面包屑导航"
         >
             {/* 桌面端：完整面包屑 */}
@@ -118,9 +118,9 @@ export function Breadcrumb({ customItems, className = '' }: BreadcrumbProps) {
                             {item.href && !item.isCurrentPage ? (
                                 <Link
                                     href={item.href}
-                                    className="hover:text-gray-900 dark:hover:text-gray-200 transition-colors flex items-center min-w-0"
+                                    className="hover:text-gray-800 dark:hover:text-gray-200 transition-colors flex items-center min-w-0"
                                 >
-                                    {index === 0 && <FaHome className="w-4 h-4 mr-1 flex-shrink-0" />}
+                                    {index === 0 && <FaHome className="w-3.5 h-3.5 mr-1 flex-shrink-0" />}
                                     <span className={`truncate ${maxWidthClass}`} title={item.label}>
                                         {item.label}
                                     </span>
@@ -128,12 +128,12 @@ export function Breadcrumb({ customItems, className = '' }: BreadcrumbProps) {
                             ) : (
                                 <span
                                     className={`flex items-center min-w-0 ${item.isCurrentPage
-                                        ? 'text-gray-900 dark:text-gray-100 font-medium'
+                                        ? 'text-gray-800 dark:text-gray-200 font-semibold'
                                         : ''
                                         }`}
                                     aria-current={item.isCurrentPage ? 'page' : undefined}
                                 >
-                                    {index === 0 && <FaHome className="w-4 h-4 mr-1 flex-shrink-0" />}
+                                    {index === 0 && <FaHome className="w-3.5 h-3.5 mr-1 flex-shrink-0" />}
                                     <span className={`truncate ${maxWidthClass}`} title={item.label}>
                                         {item.label}
                                     </span>

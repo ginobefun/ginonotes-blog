@@ -74,3 +74,23 @@ Required for media upload functionality:
 - **Code highlighting**: rehype-pretty-code with github-dark theme
 - **Links**: Automatic heading anchors via rehype-autolink-headings
 - **Slugs**: Auto-generated for heading navigation
+
+## Design Context
+
+### Users
+中文技术读者，以 AI / 工程开发从业者为主。使用场景：PC 侧边栏浏览 + 移动端偶发访问。核心需求：快速判断文章价值，舒适地深度阅读长文。
+
+### Brand Personality
+**探索 · 创造 · 有趣** — 专业但不沉闷，有个人温度，像和一个有 15 年经验的工程师朋友聊天。
+
+### Aesthetic Direction
+- **色调**：保留墨蓝 (`#1a365d`) + 琥珀 (`#d97706`) + 纸白 (`#fefdfb`) 暖色系
+- **参考站点**：leerob.com（极简内容优先）、rauno.me（精致细节）、impeccable.style（系统性设计原则）、vercel.com/blog（清晰信息层次）
+- **反参考**：避免过度装饰（大量动效/渐变）、视觉噪音、低对比度灰色文字
+
+### Design Principles
+1. **内容优先** — 装饰服务于内容，不喧宾夺主；移除无信号价值的动效（如背景 blob）
+2. **清晰的层次** — 标题、元信息、正文、辅助信息之间有明确的视觉分级
+3. **克制的交互** — 悬停/激活状态用低饱和背景 + 品牌色文字，不用重填充块
+4. **可读性第一** — 正文用 `text-gray-700 dark:text-gray-300`，而非过浅的 gray-600/gray-400
+5. **无障碍合规** — 所有交互元素必须有 `focus-visible:ring-*`；动效必须尊重 `prefers-reduced-motion`

@@ -15,7 +15,7 @@ export default function Home() {
 
             {/* 主要内容区域 */}
             <Container>
-                <div className="space-y-16 py-12 sm:py-16 lg:py-20">
+                <div className="space-y-12 pt-4 pb-12 sm:pt-6 sm:pb-16 lg:pt-8 lg:pb-20">
                     {/* 特色文章 - 使用 Suspense */}
                     <Suspense fallback={<FeaturedPostSkeleton />}>
                         <FeaturedPostSection />
