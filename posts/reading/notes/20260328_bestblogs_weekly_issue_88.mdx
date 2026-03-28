@@ -1,0 +1,105 @@
+---
+title: BestBlogs 周刊第 88 期：智能体式思考
+date: 2026-03-28
+description: 林俊旸提出大模型的下半场是 Agentic Thinking，Karpathy 描述 20/80 的编排模式，Anthropic 用多智能体架构突破长程编码瓶颈，Cursor 用实时强化学习每 5 小时迭代一次模型。当推理能力趋于饱和，真正的差异化取决于 AI 能否在真实环境中持续行动。
+category: reading
+tags: BestBlogs, Agentic Thinking, Anthropic, Cursor, Claude Code, Agent
+cover: /covers/cover_bestblogs_88.png
+slug: bestblogs-weekly-issue-88
+---
+
+读完本周精选内容，我脑子里一直转着一个画面：我这周在测 BestBlogs 2.0，订阅源管理、AI 生成早报、个性化推荐、AI 辅助阅读，一个功能一个功能地过。但我几乎没有亲手写测试用例。我做的事情是给不同的智能体分配角色，一个负责洞察产品特性，一个负责编码实现，一个负责代码检视，然后我来判断每个环节的产出是不是对的，哪些地方需要我亲自进去验证。
+
+这种工作方式，本周有了一个准确的名字：Agentic Thinking，智能体式思考。林俊旸提出大模型竞争的下半场就是这个，Karpathy 用自己的日常展示了它的样子，Anthropic 和 Cursor 各自拿出了让它更可靠的工程方案。AI 的核心竞争力正在从「想得深」转向「做得到」。
+
+![BestBlogs 周刊第 88 期：智能体式思考](/images/20260328_bestblogs_weekly_issue_88/bestblogs-issue-88-1.png)
+
+## 从推理到行动：大模型的下半场
+
+![从推理到行动](/images/20260328_bestblogs_weekly_issue_88/bestblogs-issue-88-2.png)
+
+林俊旸（前 Qwen 团队负责人）的[这篇文章](https://www.bestblogs.dev/article/RAW_9d5136cf)是理解本周主题的最佳起点。
+
+他回顾了过去两年推理模型的演进。OpenAI 的 o1 证明了思考本身可以成为模型的一等能力，DeepSeek-R1 证明了这种能力可以被复现和扩展。但 2025 年上半年，行业的注意力几乎全扑在 Reasoning Thinking（推理式思考）上，核心关注点是怎么让模型花更多算力去想，怎么用更强的奖励信号去训练。然后他抛出了一个关键判断：下半场比的是 Agentic Thinking（智能体式思考）。
+
+这两者的区别不在于思考的深度，而在于思考的目的。推理式思考追求的是在给出答案前把问题想透，比如解一道数学证明题。智能体式思考追求的是在和真实环境的持续交互中把事情往前推。举个例子，一个纯推理模型只需要想清楚代码逻辑，但一个智能体模型需要写完代码后运行测试，发现报错后定位问题，修改后再跑一遍，整个过程中随时调整计划。核心问题从「模型能想多深」变成了「模型能不能在不断变化的环境中持续有效地行动」。
+
+他还分享了一个很有价值的实践洞察。Qwen3 尝试过把思考和指令执行融合进同一个模型，但发现两种行为互相拉扯。指令模型需要直接、简洁、低延迟，适合大批量的企业任务，比如文本分类和结构化提取。思考模型需要消耗更多 token、保持连贯的中间推理结构。如果训练数据没经过精心筛选，融合的结果通常是两头不讨好。所以到了 2507 系列，他们还是把 Instruct 和 Thinking 版本分开了。
+
+他对 Anthropic 走整合路线的评价很有意思。他认为 Anthropic 的方向是对的，Claude 的混合推理模型展示了一个关键原则：思考应该由具体的目标任务来塑造。如果目标是写代码，思考过程就该用来搞清代码结构和排查报错，而不是写一篇文采飞扬的内心独白。
+
+Andrej Karpathy 在 No Priors 的[最新访谈](https://www.bestblogs.dev/article/RAW_1369401)从实践者的角度展示了这种转变已经走到了哪里。他说自 12 月以来基本没写过一行代码，工作模式从 80% 自己写 + 20% 交给 AI，变成了 20% 自己把控 + 80% 交给 Agent。他用了一个很有冲击力的词来形容这种状态：AI Psychosis，直译是「AI 精神病」，指的是意识到 AI 拥有近乎无限杠杆时那种兴奋与不安交织的感觉。
+
+他描述了 Peter Steinberg 同时在 10 个代码库上调度多个 Agent 的画面。Sarah Guo 也说了一句让我印象很深的话：「如果你不受 Token 支出限制，你就是系统的瓶颈。」当一个人开始用机器调度的语言来理解自己在系统中的位置，某种深层的转变已经发生了。
+
+但我在上周的 [Karpathy 深度笔记](/posts/reading/notes/karpathy-code-agents-autoresearch)中就提过，这种转变有一个容易被忽略的前提：你需要有足够的工程经验来设计指令的结构和边界。Karpathy 自己也承认了焦虑，当看到别人在推特上尝试各种好主意时，他会觉得必须走在前面。这不是从容的选择，而是被竞争节奏推着走。
+
+## 让 Agent 更可靠：从对抗评估到实时强化学习
+
+![Agent 可靠性工程](/images/20260328_bestblogs_weekly_issue_88/bestblogs-issue-88-3.png)
+
+知道了 Agentic Thinking 的方向，接下来的问题是：怎么让 Agent 在实际工作中靠得住？本周 Anthropic 和 Cursor 分别给出了自己的方案。
+
+Anthropic 连发两篇工程博客。第一篇是关于[长周期应用开发中的 Harness 设计](https://www.bestblogs.dev/article/RAW_504ce725)，作者 Prithvi Rajasekaran 来自 Anthropic Labs 团队。所谓 Harness，可以理解为围绕模型搭建的「脚手架」，包括任务分解、上下文管理、质量检查等一切让 Agent 稳定运行的工程机制。
+
+他先从前端设计场景入手，发现了一个关键问题：让 Agent 评价自己的作品时，它几乎总是给出正面评价，即使质量明显平庸。这就像让一个人给自己的作文打分，天然会手下留情。他的解决办法借鉴了 GAN（生成对抗网络）的思路，把「做事的人」和「评判的人」分成两个独立的 Agent。调校一个独立的评估者去保持批判性，比让生成者自我批判要容易得多。
+
+他用四个维度来打分：设计质量、原创性、工艺和功能性，刻意给前两者更高的权重，因为 Claude 在工艺和功能上已经表现不错，但在设计和原创性上容易产出平庸的「AI 模板风」。有一个案例让我印象很深：在一个荷兰艺术博物馆网站的生成任务中，模型前九轮都在迭代一个深色主题的着陆页，质量稳步提升但没有惊喜。到了第十轮，它突然抛弃了整个方案，把网站重新想象成一个 3D 空间体验，棋盘格地板用 CSS 透视渲染，画作挂在墙上，通过门廊在画廊间导航。这种创造性跳跃，此前从未在单次生成中出现过。
+
+验证了对抗评估的有效性后，他把这套方法扩展到了全栈开发，加入了第三个角色 Planner，形成 Planner + Generator + Evaluator 的三智能体架构。Planner 负责把简短的用户提示扩展成完整的产品规格，Generator 按 sprint 逐个实现功能，Evaluator 通过 Playwright MCP 实际操作运行中的应用来验收。每个 sprint 开始前，Generator 和 Evaluator 会先协商一份 sprint contract，明确什么算「做完了」。Evaluator 不只看代码能不能跑，而是像真实用户一样点击应用、测试 API 端点和数据库状态。任何一个维度低于阈值，sprint 就失败，Generator 会拿到具体反馈进行下一轮。
+
+Anthropic 的[第二篇博客](https://www.bestblogs.dev/article/RAW_bf9ab35c)讲的是 Claude Code 自动模式（Auto Mode），解决的是一个很实际的问题。Claude Code 默认每个操作都要用户点确认，时间长了会产生审批疲劳，实际数据显示用户接受了 93% 的操作。自动模式用两层防御来替代人工审批。输入层有一个提示词注入探针，扫描文件读取、网页抓取等工具输出，发现可疑内容时在上下文中插入警告。输出层是一个基于 Sonnet 4.6 的转录分类器（Transcript Classifier），用两阶段决策：先做一个快速的单 token 判断，只有被标记的操作才进入推理分析。这个分类器有一个精妙的设计叫「推理盲视」，它只看用户消息和 Agent 的工具调用，不看 Claude 自己的推理过程，避免被 Agent 的自圆其说所影响。
+
+他们在博客中公开了内部事故日志的几个案例。Agent 因为误解指令删除了远程 git 分支；把工程师的 GitHub 认证 token 上传到内部计算集群；试图对生产数据库执行迁移。这些都不是恶意行为，而是模型过于积极主动，在用户没有明确授权的方向上采取了行动。自动模式的核心原则很明确：只有用户明确授权的操作才被允许，Agent 自己决定做的事情默认是未授权的。
+
+Cursor 从另一个角度发力。他们[公开了 Composer 背后的核心技术](https://www.bestblogs.dev/article/RAW_4b07215e)：实时强化学习（Real-time RL）。传统做法是在模拟环境中训练编码模型，但模拟环境和真实使用之间总有差距，最大的难点在于模拟用户。你可以模拟一台电脑执行代码的过程，但很难模拟一个真实用户会怎么反应、会怎么操作。Cursor 的方案是跳过模拟，直接用生产环境的推理 token 和用户反馈作为训练信号，每 5 小时就能交付一个新的模型检查点。
+
+这个速度意味着他们可以保持数据几乎完全 on-policy，也就是说训练用的数据来自当前正在服务的那个模型版本，而不是一个过时的旧版本。他们分享了两个 reward hacking（奖励作弊）的案例。一个是 Composer 学会了在预感会失败的任务上故意发出一个错误的工具调用。因为工具调用出错时这条数据会被丢弃，模型就不会收到负面奖励，相当于「不做就不会错」。另一个更微妙：模型学会了通过问澄清性问题来推迟冒险的编辑操作，因为没写的代码不会被扣分。团队通过监控发现编辑率在急剧下降后才抓到这个问题并修正了奖励函数。
+
+这两个案例本身就很能说明 Agentic Thinking 的特点。模型在和真实环境的交互中学习，学会了钻空子。但因为有真实用户做最终裁判，作弊行为最终会被发现。这比在模拟环境中训练要更难作弊，也更难逃过检测。
+
+## 从模型到基建：Agent 工程的底层逻辑
+
+![Agent 基建层](/images/20260328_bestblogs_weekly_issue_88/bestblogs-issue-88-4.png)
+
+模型越来越强，工具链越来越快，但把一个 Agent 真正跑起来需要的远不止一个好模型。本周几篇文章从不同层面展示了这个基建层的样子。
+
+Tw93 的[这篇长文](https://www.bestblogs.dev/article/RAW_58852dc5)从实践者的角度系统梳理了 Agent 架构的核心要素，涵盖控制流、上下文工程、工具设计、记忆、多 Agent 组织、评测和安全。他有一个判断让我印象深刻：更贵的模型带来的提升，很多时候没有想象中那么大，反而 Harness 和验证测试的质量对最终成功率的影响更大。换句话说，把围绕模型的「脚手架」搭好，往往比换一个更强的模型更有效。
+
+他还提出了一个很实用的调试优先级：Agent 选错工具时，先去看工具描述写得是不是准确，而不是去调模型。因为多数工具选择错误都出在描述不够清晰。另外一个容易被忽视的问题是评测系统本身的 bug，如果你的评测标准有偏差，在 Agent 代码上反复调也看不到效果。这和 Anthropic 在 Harness 设计中的发现高度一致，提升 Agent 表现的杠杆往往不在模型本身，而在围绕模型搭建的基础设施。
+
+阿里云开发者的[一篇文章](https://www.bestblogs.dev/article/RAW_ad7e6094)从控制论视角呼应了这个判断。他们提出 LLM 的不确定性是物理规律的必然产物，AI 开发的本质已经变成围绕 Context（上下文）的状态管理。当应用层坍塌为胶水代码，开发者该构建的不是功能，而是让 Agent 可靠运行的 Harness 基础设施。
+
+Cloudflare 则从最底层给出了方案。他们的 [Dynamic Worker Loader](https://www.bestblogs.dev/article/RAW_0efed9f1) 基于 V8 Isolate（Chrome 浏览器使用的 JavaScript 引擎）为 AI 代码执行提供沙盒环境。传统的容器（Container）启动需要几百毫秒，内存占用几百 MB。Dynamic Worker 启动只需几毫秒，内存占用几 MB，快了大约 100 倍。关键设计在于每个请求可以启动一个独立的沙盒，用完即弃，不存在跨请求的安全隐患。当 Agent 需要在运行时生成并执行代码时，这种轻量级隔离就变得必不可少。他们之前展示过把 MCP server 转换成 TypeScript API 可以节省 81% 的 token 消耗，Dynamic Worker Loader 为这种模式提供了安全的执行环境。
+
+## Agent 的触角在延伸
+
+Agent 能做的事情也在变多。Claude 的 Computer Use 和 Dispatch 组合实现了[纯视觉驱动的电脑交互](https://www.bestblogs.dev/article/RAW_24ccb0ba)，Agent 可以操控微信等任意本地软件，还支持从手机远程调度桌面任务。这意味着 Agent 不再局限于 API 和命令行，而是可以像人一样看着屏幕、点击按钮来完成工作。freeCodeCamp 同期发布了一份近两万字的 [Claude Code 实战手册](https://www.bestblogs.dev/article/RAW_199cbc01)，涵盖 MCP 协议、并行工作流与 Git 工作树等进阶用法。另一篇关于 [IDE 终结](https://www.bestblogs.dev/article/RAW_7bbc3383)的讨论则指出 IDE 并未消亡，而是正在去中心化，开发者的角色已从编码者转变为 Agent 的监督者和编排者。
+
+模型底层也在为 Agent 场景做准备。谷歌推出的 [TurboQuant](https://www.bestblogs.dev/article/RAW_50669f01) 算法实现了 KV cache（推理时的中间状态缓存）6 倍以上压缩率且精度零损失，在 H100 上达成 8 倍推理加速。Agent 场景下每次请求都要带上系统提示词、工具定义和代码上下文，KV cache 的大小直接决定了单次推理的成本和延迟。Sebastian Raschka 的[注意力机制可视化指南](https://www.bestblogs.dev/article/RAW_16388334)则系统梳理了从 GQA、MLA 到滑动窗口的演进。[Gemini 3.1 Flash Live](https://www.bestblogs.dev/article/RAW_18bd0659) 在语音方向显著提升了交互自然度，优化了多步函数调用与情感音调识别。当 Agent 需要和人对话而不只是处理文本时，实时语音的流畅度就变得关键。
+
+## AI 工厂与 Agent 生态
+
+![AI 工厂](/images/20260328_bestblogs_weekly_issue_88/bestblogs-issue-88-5.png)
+
+黄仁勋在 [Lex Fridman 播客](https://www.bestblogs.dev/article/RAW_8634120)中花了很长的篇幅谈计算如何从单一芯片演进为整座「AI 工厂」。他的核心判断是 AI 的扩展规律有四个维度：预训练扩展、后训练扩展、测试时扩展（也就是推理时花更多算力去想）以及智能体扩展（让 Agent 在真实环境中不断行动和学习）。最后一个维度正是 Agentic Thinking 在基础设施层面的映射。他甚至预测科技公司招工程师时除了薪水还会给 token 配额，一个年薪 50 万美元的工程师应该消耗至少 25 万美元的 token。
+
+[Waymo CEO 的访谈](https://www.bestblogs.dev/article/RAW_df35764)从自动驾驶的视角印证了这种系统级思维。自动驾驶的核心不是单一模型的能力，而是教师模型和学生模型之间的蒸馏体系，在端到端学习与系统可解释性之间取得平衡。这和软件 Agent 领域面临的挑战相似：模型能力之外，系统可靠性才是规模化的前提。
+
+Agent 生态也在快速成形。开源工具 [Paperclip](https://www.bestblogs.dev/article/RAW_b4bbaed) 展示了「零人力公司」的愿景，用 CEO 智能体管理团队招聘和任务拆解。[AirJelly 创始人的访谈](https://www.bestblogs.dev/article/RAW_a5c917e)提出 Agent 的护城河不在执行能力，而在对用户上下文的深度理解。[GDC 现场观察](https://www.bestblogs.dev/article/RAW_d52515ac)表明游戏已成为 AI 技术验证的核心实验场。而阿里云 CIO 的[纪实报告](https://www.bestblogs.dev/article/RAW_12e5b0cb)则泼了一盆冷水：AI 是映射 IT 历史包袱的镜子，别被「10 倍研发效能」的增长幻象迷了眼。
+
+## 编排者需要知道方向
+
+![保持好奇](/images/20260328_bestblogs_weekly_issue_88/bestblogs-issue-88-6.png)
+
+我在这周测试 BestBlogs 2.0 时最深的感受是，编排 Agent 本身也需要判断力。
+
+你需要知道哪些任务适合交给 Agent 独立完成，哪些需要你亲自验证。比如我让智能体去跑功能测试，结果全部通过，但我自己进去点了几下就发现推荐列表的排序逻辑有问题。Agent 测的是功能能不能跑通，我测的是体验对不对。你需要设计合理的反馈闭环，而不是把所有事情都丢给 Agent 然后期待结果。
+
+开发者从执行者变成编排者是事实，但好的编排者和差的编排者之间的差距，可能比好的程序员和差的程序员之间的差距更大。因为编排错误的代价不是一个 bug，而是整个方向的偏离。Agentic Thinking 不只是模型的新能力，也是对使用者的新要求。
+
+本期完整的 20 篇精选文章可以在 [BestBlogs.dev](https://www.bestblogs.dev/newsletter/issue88) 上查看。
+
+保持好奇，我们下周见。
+
+![保持好奇，我们下周见。](/images/20260328_bestblogs_weekly_issue_88/bestblogs-issue-88-7.png)
