@@ -17,7 +17,7 @@ export function Hero() {
                 initial={prefersReducedMotion ? false : { opacity: 0, y: -16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: prefersReducedMotion ? 0 : 0.5, ease: 'easeOut' }}
-                className="relative mx-auto max-w-6xl px-4"
+                className="relative mx-auto max-w-6xl px-4 text-center"
             >
                 <h1
                     className="max-w-2xl text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 md:text-5xl lg:text-6xl"
@@ -30,7 +30,7 @@ export function Hero() {
                 </p>
 
                 {/* 核心技能标签 — 减小间距避免 Workflow 孤行 */}
-                <div className="mt-8 flex flex-wrap gap-1.5">
+                <div className="mt-8 flex flex-wrap gap-1.5 justify-center max-w-lg">
                     {primarySkills.map((skill, i) => (
                         <motion.span
                             key={skill}
@@ -45,7 +45,7 @@ export function Hero() {
                 </div>
 
                 {/* 次要技能标签 */}
-                <div className="mt-2 flex flex-wrap gap-1.5">
+                <div className="mt-2 flex flex-wrap gap-1.5 justify-center max-w-lg">
                     {secondarySkills.map((skill) => (
                         <span
                             key={skill}

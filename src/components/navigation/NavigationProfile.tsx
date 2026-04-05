@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { FaEnvelope, FaGithub, FaTwitter } from 'react-icons/fa'
 
 const socialLinks = [
-    { href: 'https://github.com/ginobefun', icon: FaGithub, label: 'GitHub' },
+    { href: 'https://github.com/Haoock', icon: FaGithub, label: 'GitHub' },
     { href: 'https://twitter.com/hongming731', icon: FaTwitter, label: 'Twitter' },
 ]
 
@@ -22,17 +22,17 @@ export function NavigationProfile() {
                 </div>
                 <div className="text-center space-y-1.5">
                     <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                        Gino
+                        Haock
                     </h2>
                     <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
-                        工程师 · AI 产品创造者
+                        工程师
                     </p>
                     <p className="text-xs text-gray-400 dark:text-gray-500 italic">
-                        Just be funny.
+                        Learn more, do more and think more.
                     </p>
                     <div className="flex items-center justify-center gap-3">
                         <a
-                            href="mailto:hi@gino.bot"
+                            href="mailto:haock.us@gmail.com"
                             className="text-gray-500 hover:text-ink dark:text-gray-400 dark:hover:text-ink transition-colors"
                             aria-label="Email"
                         >
