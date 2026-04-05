@@ -19,4 +19,5 @@ export interface NavigationConfig {
   posts: NavigationItem[]
   projects: NavigationItem[]
   online: NavigationItem[]
+  tags: NavigationItem[]
 } 

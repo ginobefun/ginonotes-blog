@@ -3,7 +3,6 @@
 import { Post } from 'contentlayer2/generated'
 import { PostCard } from '@/components/common/PostCard'
 import { motion } from 'framer-motion'
-import { getCategoryName, CATEGORY_MAP } from '@/lib/images'
 import Link from 'next/link'
 
 const container = {
@@ -18,8 +17,8 @@ const container = {
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
-  show: { 
-    opacity: 1, 
+  show: {
+    opacity: 1,
     y: 0,
     transition: {
       type: "spring",
@@ -29,19 +28,19 @@ const fadeInUp = {
   }
 }
 
-interface CategoryPageContentProps {
-  category: string
+interface TagPageContentProps {
+  tag: string
   posts: Post[]
   currentPage: number
   totalPages: number
 }
 
-export function CategoryPageContent({ 
-  category, 
-  posts, 
-  currentPage, 
-  totalPages 
-}: CategoryPageContentProps) {
+export function TagPageContent({
+  tag,
+  posts,
+  currentPage,
+  totalPages
+}: TagPageContentProps) {
   return (
     <motion.div
       variants={container}
@@ -51,7 +50,7 @@ export function CategoryPageContent({
     >
       <motion.div variants={fadeInUp} className="space-y-4">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-          {getCategoryName(category as keyof typeof CATEGORY_MAP)}
+          标签: {tag}
         </h1>
         <p className="text-gray-600 dark:text-gray-400">
           共 {posts.length} 篇文章
@@ -79,7 +78,7 @@ export function CategoryPageContent({
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <Link
               key={page}
-              href={`/categories/${category}?page=${page}`}
+              href={`/tags/${encodeURIComponent(tag)}?page=${page}`}
               className={`inline-flex h-10 w-10 items-center justify-center rounded-lg font-medium ${
                 currentPage === page
                   ? 'bg-blue-500 text-white'
@@ -93,4 +92,4 @@ export function CategoryPageContent({
       )}
     </motion.div>
   )
-} 
+}
