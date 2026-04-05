@@ -2,10 +2,10 @@ import { Metadata } from 'next'
 import { WEBSITE_HOST_URL } from './constants'
 
 const meta = {
-  title: 'Gino Notes',
-  description: '15 年工程经验，专注 AI Agent、AI Coding 与产品构建的技术博客。',
+  title: 'Haock Blog',
+  description: '2年工程经验，记录学习和思考的内容',
   image: `${WEBSITE_HOST_URL}/logo.jpg`,
-  author: 'Gino Zhang',
+  author: 'Haock Liu',
 }
 
 // Schema.org 结构化数据
@@ -21,7 +21,7 @@ export const jsonLd = {
     url: WEBSITE_HOST_URL,
     sameAs: [
       'https://github.com/ginobefun',
-      'https://twitter.com/hongming731',
+      'https://x.com/haock0',
       'https://bestblogs.dev',
     ],
   },
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(WEBSITE_HOST_URL),
   title: {
     default: meta.title,
-    template: '%s | Gino Notes',
+    template: '%s | Haock Blog',
   },
   description: meta.description,
   openGraph: {
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
       }
     ],
     card: 'summary_large_image',
-    creator: '@hongming731',
+    creator: '@haock0',
   },
   alternates: {
     canonical: WEBSITE_HOST_URL,

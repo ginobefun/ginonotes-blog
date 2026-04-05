@@ -4,13 +4,13 @@ import RSS from 'rss'
 
 export async function GET() {
   const feed = new RSS({
-    title: 'Gino Notes',
-    description: '记录学习和思考的内容，分享技术、人工智能、产品设计和生活随想。',
+    title: 'Haock Blog',
+    description: '记录学习、思考内容',
     site_url: WEBSITE_HOST_URL,
     feed_url: `${WEBSITE_HOST_URL}/feed.xml`,
     language: 'zh-CN',
     pubDate: new Date(),
-    copyright: `All rights reserved ${new Date().getFullYear()}, Gino Zhang`,
+    copyright: `All rights reserved ${new Date().getFullYear()}, Haock Liu`,
   })
 
   allPosts
@@ -22,7 +22,7 @@ export async function GET() {
         url: `${WEBSITE_HOST_URL}${post.url}`,
         date: new Date(post.date),
         categories: [post.category],
-        author: 'Gino Zhang',
+        author: 'Haock Liu',
       })
     })
 

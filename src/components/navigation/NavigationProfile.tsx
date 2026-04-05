@@ -3,7 +3,7 @@ import { FaEnvelope, FaGithub, FaTwitter } from 'react-icons/fa'
 
 const socialLinks = [
     { href: 'https://github.com/Haoock', icon: FaGithub, label: 'GitHub' },
-    { href: 'https://twitter.com/hongming731', icon: FaTwitter, label: 'Twitter' },
+    { href: 'https://x.com/haock0', icon: FaTwitter, label: 'Twitter' },
 ]
 
 export function NavigationProfile() {
@@ -13,7 +13,7 @@ export function NavigationProfile() {
                 <div className="relative w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden ring-2 ring-ink/20 dark:ring-ink/30">
                     <Image
                         src="/avatar.jpg"
-                        alt="Gino"
+                        alt="Haock"
                         fill
                         className="object-cover transition-transform group-hover:scale-105"
                         sizes="(max-width: 80px) 80px"

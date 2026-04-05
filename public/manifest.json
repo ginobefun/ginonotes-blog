@@ -1,7 +1,7 @@
 {
   "name": "Gino Notes",
   "short_name": "Gino",
-  "description": "记录学习和思考的内容，分享技术、人工智能、产品设计和生活随想。",
+  "description": "记录学习、思考内容",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

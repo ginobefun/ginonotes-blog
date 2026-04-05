@@ -86,22 +86,14 @@ export const navigation: NavigationConfig = {
     { href: '/tags' as const, label: '更多', icon: FaTags, count: getAllTags().length - 10 },
   ]),
   projects: [
-    { href: 'https://bestblogs.dev', label: 'BestBlogs.dev', icon: FaCode },
-    { href: 'https://wenrun.ai', label: 'WenRun.ai', icon: FaFeather },
-    { href: 'https://xgo.ing', label: 'XGo.ing', icon: FaRobot },
-    { href: 'https://tiky.ai', label: 'Tiky.ai', icon: FaLightbulb },
+    { href: 'https://github.com/Haoock/MyProjectsInNjtech', label: 'NjTech', icon: FaCode }
   ],
   online: [
-    { href: 'https://github.com/ginobefun', label: 'GitHub', icon: FaGithub },
+    { href: 'https://github.com/Haoock', label: 'GitHub', icon: FaGithub },
     {
-      href: 'https://twitter.com/hongming731',
+      href: 'https://x.com/haock0',
       label: 'Twitter',
       icon: FaTwitter,
-    },
-    {
-      href: 'https://mp.weixin.qq.com/s/5ulE6cqhyHDNhhDT08hOXA',
-      label: '微信公众号',
-      icon: FaWeixin,
-    },
+    }
   ],
 }
