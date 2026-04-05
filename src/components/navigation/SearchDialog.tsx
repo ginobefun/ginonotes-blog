@@ -112,10 +112,18 @@ export function SearchDialog({ isOpen, onClose, onOpen }: SearchDialogProps) {
                   className="block px-4 sm:px-6 py-4 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 >
                   <div className="space-y-3">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-sm font-medium text-blue-800 ring-1 ring-blue-100/50 transition-colors hover:bg-blue-200 dark:bg-blue-900/70 dark:text-blue-200 dark:ring-blue-900/50 dark:hover:bg-blue-900">
                         {getCategoryName(post.category as keyof typeof CATEGORY_MAP)}
                       </span>
+                      {post.tags && post.tags.split(',').map((tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-400"
+                        >
+                          {tag.trim()}
+                        </span>
+                      ))}
                     </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100">
                       {post.title}

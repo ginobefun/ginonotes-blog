@@ -77,12 +77,14 @@ export const navigation: NavigationConfig = {
       count: getCategoryCount('thoughts'),
     },
   ],
-  tags: getAllTags().map((item) => ({
+  tags: getAllTags().slice(0, 10).map((item) => ({
     href: createTagRoute(item.tag),
     label: item.tag,
     icon: FaTags,
     count: item.count,
-  })),
+  })).concat([
+    { href: '/tags' as const, label: '更多', icon: FaTags, count: getAllTags().length - 10 },
+  ]),
   projects: [
     { href: 'https://bestblogs.dev', label: 'BestBlogs.dev', icon: FaCode },
     { href: 'https://wenrun.ai', label: 'WenRun.ai', icon: FaFeather },

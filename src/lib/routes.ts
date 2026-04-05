@@ -4,14 +4,16 @@ import { Route } from 'next'
 export type PostRoute = Route<`/posts/${string}`>
 export type CategoryRoute = Route<`/categories/${string}`>
 export type TagRoute = Route<`/tags/${string}`>
+export type TagsIndexRoute = Route<'/tags'>
 
 // 定义外部链接类型
 export type ExternalRoute = `https://${string}`
 
 // 定义所有可能的路由类型
-export type AppRoute = 
+export type AppRoute =
   | Route<'/'>
   | Route<'/about'>
+  | Route<'/tags'>
   | PostRoute
   | CategoryRoute
   | TagRoute
