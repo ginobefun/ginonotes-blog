@@ -1,0 +1,135 @@
+---
+title: BestBlogs 周刊第 89 期：智能体工程化
+date: 2026-04-05
+description: 腾讯工程师用一个 AGENTS.md 文件演化出 22 个智能体的工程体系，Böckeler 在 Martin Fowler 博客发表约束工程框架，天猫用 97.9% 采纳率验证胶水编程，Cursor 3 和 Claude Code 分别从产品和架构层面定义了智能体开发的新形态。当 AI 从写代码的工具变成独立执行任务的智能体，整个行业需要一套全新的工程纪律。
+category: reading
+tags: BestBlogs, Agentic Engineering, Cursor 3, Claude Code, Harness Engineering, Agent
+cover: https://media.ginonotes.com/covers/cover_bestblogs_89_1.png
+slug: bestblogs-weekly-issue-89
+---
+
+读完本周精选内容，我一直在想一个问题：从什么时候开始，我们讨论 AI 编程时，话题的重心从「模型有多强」变成了「怎么管住它」？
+
+本周的关键词是智能体工程化。腾讯工程师 rickyshou 从一个 AGENTS.md 文件出发，两个月后演化出包含 22 个智能体、27 个技能的完整工程体系。Thoughtworks 的 Birgitta Böckeler 在 Martin Fowler 博客发表约束工程框架，把 Agent 治理拆解为前馈引导和反馈传感两条路径。天猫团队则用 97.9% 的代码采纳率证明了一件事：让 AI 抄代码，比让它写代码靠谱得多。三个实践指向同一个方向：当 AI 从辅助工具升级为独立执行任务的智能体，行业需要一套全新的工程纪律来驾驭它。
+
+这周我和家人在外度假，但 BestBlogs 2.0 的开发没有停。我让 Claude Code 基于项目的顶层设计文档，包括产品愿景、品牌定义、设计语言和术语库，对 2.0 版本做全面 review 和优化。借助 Preview 功能，它自己边改进边验证，我只需要在手机上看看进度、确认方向。这大概就是智能体工程化最朴素的样子：你负责定义标准和边界，Agent 在约束内交付成果。下周末 2.0 开始邀请内测，届时和大家分享。
+
+![BestBlogs 周刊第 89 期：智能体工程化](https://media.ginonotes.com/images/bestblogs-weekly-issue-89/bestblogs-issue-89-1.png)
+
+## 从 Vibe Coding 到 Agentic Engineering
+
+本期最值得细读的长文来自腾讯技术工程团队。作者 rickyshou 记录了自己如何从一个 AGENTS.md 文件出发，[两个月内构建出包含 22 个智能体和 27 个技能的完整工程体系](https://www.bestblogs.dev/article/66d6464a)。这不是一篇理论文章，而是一份带着所有弯路和修正的实践记录。
+
+![从 Vibe Coding 到 Agentic Engineering](https://media.ginonotes.com/images/bestblogs-weekly-issue-89/bestblogs-issue-89-2.png)
+
+故事要从 Karpathy 说起。2025 年 2 月他发了一条推文，发明了 Vibe Coding 这个词——「你完全沉浸在氛围之中，拥抱指数级增长，甚至忘记代码的存在」。一年后的 2026 年 2 月，他自己给出了升级版本的命名：Agentic Engineering。理由很简单，99% 的时间你不再直接写代码，而是协调智能体并进行监督；而 Engineering 意味着这是一门有深度的学科，有其自身的艺术、科学和专业知识。
+
+有意思的是，rickyshou 在 Karpathy 公开命名的一个月前，2026 年 1 月 2 日凌晨，就已经提交了 AgenticMetaEngineering 项目的第一个 commit。他多加了一个 Meta，因为他想清楚了一件事：Agentic Engineering 本身也需要被工程化。跨会话状态恢复、工具调用评估、上下文系统化管理、知识持续沉淀——这些不是「用 AI 写代码」的问题，而是「让 AI 可靠地写代码」之前必须解决的工程问题。
+
+他的演进路径很有参考价值。AGENTS.md 解决了重复解释的问题，但很快膨胀到不可维护；context/ 分层解决了膨胀问题，但跨会话会失忆；结构化记忆解决了失忆问题，但知识不复利；最终的复合工程让知识产生复利效应。每一层都是被真实需求逼出来的，不是事先设计好的。
+
+来自外部的独立验证也很有说服力。Anthropic 黑客松获奖者 @affaanmustafa 的 `everything-claude-code` 项目，在 10 个月的日常使用中独立演化出 13 个 Agent、43 个 Skills、31 个命令，架构高度趋同。当不同人在不同场景下独立达到相似的架构，说明这不是偶然的个人偏好，而是问题域本身的结构在引导解决方案的形状。
+
+## 给智能体装上缰绳：约束工程
+
+模型越来越强，但强大不等于可靠。本周两篇文章从理论和实践两个维度回答了同一个问题：怎么让 Agent 在「能做」和「该做」之间找到边界。
+
+![约束工程](https://media.ginonotes.com/images/bestblogs-weekly-issue-89/bestblogs-issue-89-3.png)
+
+Thoughtworks 的 Birgitta Böckeler 在 Martin Fowler 博客发表的[约束工程一文](https://www.bestblogs.dev/article/1caa5015)提出了一个清晰的框架：Agent = Model + Harness。Harness 就是模型之外的一切——上下文工程、架构约束、验证机制。她进一步把 Harness 拆成两条路径：前馈引导（Guides）在 Agent 行动前缩小可能的输出空间，反馈传感器（Sensors）在行动后检测问题并触发自纠正。两条路径各自又分为计算型（确定性的、快速的 linter 和测试）和推理型（基于 LLM 的语义判断），形成一个 2×2 矩阵。
+
+她有一个洞察让我印象很深：编程智能体「没有社会问责感，不会对 300 行的函数感到审美上的不适，也没有'我们这里不这么干'的直觉」。所以约束不是在限制 Agent，而是在补偿它天然缺失的工程直觉。她还引用了控制论中 Ashby 的必要多样性定律——承诺一个服务拓扑（CRUD 服务、事件处理器、数据仪表盘）本身就是在缩小输出空间，让全面的约束变得可行。企业甚至可以根据可用的 Harness 模板来选择技术栈。
+
+[腾讯科技的深度解读](https://www.bestblogs.dev/article/5b7ab5d5)则从 15 个月的工程论文中追溯了 Harness 的完整发生史。作者 Yousa 博阳用了一个精彩的比喻：模型是引擎，但引擎加方向盘加车轮不是一辆车，你还需要变速箱、刹车和仪表盘。文章梳理了从 Anthropic 2024 年 12 月的「从最简单方案开始」，到 2025 年 AutoGPT 的记忆外化、Devin 的结构化面板、Claude Code 的 scratchpad，再到 2026 年多智能体协作和对抗评估的完整演进。
+
+一个关键数据：LangChain 的实验显示，同一个模型换上更精巧的 Harness 架构，Terminal Bench 2.0 通过率从 52.8% 跳到 66.5%——模型权重一个字节都没改。这也是为什么 Harness Engineering 在 2026 年第一季度成了应用层最热的词：它证明了工程基建的投入可以直接转化为 Agent 能力的提升。
+
+文章还指出了一个反直觉的趋势：Anthropic 在全行业拼命往上砌砖的时候，已经开始拆自己的控制组件。随着模型能力提升，他们通过 44 个 feature flag 精确评估哪些 Harness 层仍然必要，果断移除多余的约束。Böckeler 称之为「补偿面迁移」——Harness 的核心竞争力不在于有多厚，而在于精准捕捉补偿面迁移的时机，在模型增强时果断做减法。
+
+## 开发工具的智能体转向
+
+方法论和框架讲明白了，接下来看工具层在发生什么。本周 Cursor 和 Claude Code 分别从产品和架构层面，定义了智能体开发的新形态。
+
+[Cursor 3](https://www.bestblogs.dev/article/63cbae4c) 的发布是一个分水岭。这不再是「带 AI 功能的 IDE」，而是一个从零构建的、以智能体为核心的统一工作区。它支持多仓库并行，本地和云端 Agent 无缝切换——你可以在桌面启动一个 Agent，合上笔记本后它自动迁移到云端继续工作；也可以从手机、Slack、GitHub 或 Linear 上启动云端 Agent，然后在桌面接管它的工作。所有 Agent 都在侧边栏里一目了然。
+
+官方博客用了一个准确的描述：我们正在进入软件开发的第三个时代，「智能体舰队自主工作来交付改进」。开发者的核心工作从编辑文件转向调度智能体集群。内置浏览器可以直接标注 UI 元素让 Agent 修复，新的插件市场支持一键安装 MCP、Skills 和 Subagents，团队还能搭建私有插件仓库。
+
+Simon Willison 在 Lenny's Podcast 上的[深度访谈](https://www.bestblogs.dev/article/cc81d05)为这个转变提供了最清晰的分级框架。他基于 Dan Shapiro 的模型（类比自动驾驶分级）提出了 AI 辅助编程的六个层级：从 Level 0 的「辣味自动补全」（最初的 Copilot），到 Level 2 的「初级开发者」（结对编程，逐行审查），到 Level 4 的「工程团队」（你是 PM/工程经理，Agent 干活），最终到 Level 5 的「暗工厂」——没人写代码，也没人审查代码，AI 自己做 QA。
+
+![暗工厂模式](https://media.ginonotes.com/images/bestblogs-weekly-issue-89/bestblogs-issue-89-4.png)
+
+「暗工厂」这个名字来自日本 Fanuc 的无灯工厂，机器人在黑暗中工作因为它们不需要看见。应用到软件开发：一个把规格说明变成软件的黑箱。他指出拐点发生在 2025 年 11 月，GPT 5.1 和 Claude Opus 4.5 跨过了一个门槛——代码「几乎所有时候都能按你说的做」。这个「几乎」看似微不足道，却改变了一切。
+
+他还直言了暗工厂模式的核心风险：当 Agent 批量生产代码时，传统的逐行 Code Review 已难以为继，大规模自动化测试集群才是合理的替代方案。他重提了自己命名的提示词注入概念和「致命三要素」——Agent 同时能访问私有数据、暴露于恶意指令、拥有数据外发通道。只要切断其中一条，就能保证安全。
+
+说到 Agent 架构的工程深度，本周 Claude Code 源码的意外曝光是绕不开的事件。3 月 31 日，因为一个缺失的 .npmignore 文件，512,000 行未混淆的 TypeScript 源码随 59.8 MB 的 source map 发布到了 npm。掘金上[第一时间的架构拆解](https://www.bestblogs.dev/article/97b7a7a2)揭示了顶级 Agent 运行时的工程细节。
+
+几个设计决策值得关注。Claude Code 的 Agent 主循环基于异步生成器，通过 yield 实现高效的背压控制。工具调度采用流式并行执行，模型在生成过程中就可以并行运行工具。上下文管理是五层压缩管道：从最轻量的 ToolResultBudget 到最重的 ReactiveCompact，逐级优化 token 使用，因为 LLM 的上下文窗口是最关键的资源瓶颈。权限体系是三层纵深防御加 AST 级命令分析——静态规则做快速判断，工具级检查处理特定场景，LLM 分类器做最终裁决。
+
+源码还揭示了一个未发布的功能 KAIROS——一个持久化的后台守护进程模式，可以接收定时触发、维护每日日志、订阅 GitHub webhook。另外有一个 `dream` 任务类型，灵感来自人类睡眠期间的记忆巩固——Agent 在空闲时自动整理和压缩记忆。Team Mode 下每个 Agent 控制在约 40% 的上下文利用率（单 Agent 模式退化前是 80-90%），通过基于文件的「邮箱」系统每 500ms 检查一次消息。
+
+正如那篇拆解文章总结的：AI Agent 的竞争正在从「谁的模型更强」转向「谁的 Agent 工程更好」。
+
+## 模型层的智能体就绪
+
+工具和框架在进化，模型层也在为智能体场景做准备。本周多个模型发布不约而同地指向同一个方向：原生支持智能体工作流。
+
+Google 发布的 [Gemma 4](https://www.bestblogs.dev/article/3ff37d3c) 是一个标志性事件。四个变体覆盖从端侧到数据中心的完整场景，31B Dense 版本在 Arena AI 开放模型排行榜名列第三。但最关键的变化不是性能，而是许可证：首次采用 Apache 2.0，告别了之前 Gemma 系列的 MAU 上限和可接受使用限制，开发者在本地部署和商业化应用上获得了完全的自由度。原生函数调用、结构化 JSON 输出、系统指令支持——这些能力直接面向 Agent 场景设计。自发布以来 Gemma 系列已被下载超过 4 亿次，社区创建了超过 10 万个变体。
+
+[Qwen3.6-Plus](https://www.bestblogs.dev/article/a3553eb1) 聚焦 Coding Agent 场景，引入的 preserve_thinking 机制在多轮对话中保留思维链，让智能体在复杂长程任务中保持决策一致性。[GLM-5V-Turbo](https://www.bestblogs.dev/article/36cd75e9) 给编程智能体装上了眼睛，200K 上下文的原生多模态模型可以从设计稿还原到 GUI 操控形成闭环。[Wan2.7-Image](https://www.bestblogs.dev/article/96033a81) 则在图像生成的三个老大难问题上取得突破——人物解剖更真实、文字渲染不畸变、色彩还原更精准。
+
+LangChain 的[评测报告](https://www.bestblogs.dev/article/e5afa665)给出了一个具有里程碑意义的结论：GLM-5 和 MiniMax M2.7 等开源模型在工具使用、文件操作和指令遵循等核心智能体任务上，已经对标 Claude Opus 和 GPT-5.4 等顶级闭源模型，通过优化基础设施部署成本效益提高 8-10 倍。开源阵营正式跨越临界点。这也呼应了 Böckeler 的「补偿面迁移」——当模型原生具备函数调用和结构化输出能力时，之前在 Harness 层实现的某些约束就可以退役了。
+
+## 胶水编程与团队标准
+
+方法论再好，不落地就只是 PPT。本周最有说服力的落地案例来自天猫。
+
+![胶水编程与团队标准](https://media.ginonotes.com/images/bestblogs-weekly-issue-89/bestblogs-issue-89-5.png)
+
+天猫品牌行业前端团队的[胶水编程实践](https://www.bestblogs.dev/article/1b54037f)用一个简洁的理念拿到了 97.9% 的代码采纳率：别让 AI 写代码，让它抄代码。这不是在限制 AI，而是在顺应大语言模型的能力结构——它的核心训练目标是根据已有信息预测下一个 token，有参照物时表现显著优于无参照物时。
+
+他们构建了四层物料体系来支撑这个理念。任务规格（SPEC）管意图——这次做什么；开发规范管规矩——什么不能做；代码模式（「样板间」）提供骨架——代码长什么样；领域知识补经验——有什么坑要注意。四层各自独立，答对任何一层不保证其他三层也对。Agent 可以理解需求但违反团队禁用某依赖的规矩（缺开发规范），可以守规矩但文件组织混乱（缺代码模式），可以结构规整但踩了内部组件的坑（缺领域知识）。
+
+演进路径很清晰：起步采纳率 50%，接入 AGENTS.md 云端下发和知识库后升到 76%，四层物料体系完善后突破 90%，峰值 97.9%。他们还引用了 Anthropic 的一个观察：精准的 300 token 上下文往往胜过混杂的 113,000 token 上下文。与其把所有东西一股脑塞给模型，不如在正确的时刻给它正确的信息。
+
+作者提出了三层递进关系：Vibe Coding 让 AI 能写代码，SPEC Coding 让 AI 写对代码，Glue Coding 让 AI 写出「你的」代码。企业要的恰恰是最后这一步——不只是能跑，还必须像团队自己写的一样。
+
+Google [ADK for Java 1.0.0](https://www.bestblogs.dev/article/2aa7833e) 的发布把智能体开发能力正式带入了 Java 生态。上下文压缩、全局插件架构和原生 A2A 协议支持让跨语言智能体协作成为可能。[Qdrant Skills](https://www.bestblogs.dev/article/38b7136f) 则把专家级的架构诊断经验转化为 Agent 可理解的决策树，解决的不是「如何操作」而是「何时用」和「为何用」的问题。Martin Fowler 博客上 Rahul Garg 的[另一篇文章](https://www.bestblogs.dev/article/1caa5015)也值得一提，他指出 AI 时代团队一致性的核心挑战是把资深工程师脑中的「部落知识」转化为版本化的可执行工件——这和天猫的物料体系殊途同归。
+
+## 当智能体取代员工
+
+工程化是手段，对企业而言最终的问题是：这会改变什么？本周几篇文章给出了不同维度的回答。
+
+![当智能体取代员工](https://media.ginonotes.com/images/bestblogs-weekly-issue-89/bestblogs-issue-89-6.png)
+
+Block 裁员 40% 的消息持续引发讨论。在 a16z 的[深度访谈](https://www.bestblogs.dev/article/782f4d8)中，业务主管 Owen Jennings 详细解释了背后的逻辑。他把转折点精确到了 2025 年 12 月的第一周——随着 Opus 4.6 和 CodeEx 5.3 的发布，AI 工具在一夜之间从只擅长写新代码变成了能胜任复杂现有代码库。「几十年来，公司的产出与员工人数之间一直存在正相关关系，我认为这种关联在那一周彻底断裂了。」
+
+数据很说明问题。Block 砍掉了超过 4,000 个岗位，主要在开发端而非运营端。但同一天公布的财报是史上最佳季度——Q4 毛利 29 亿美元，同比增长 24%。会议减少了 70-80%，管理层级砍掉一半以上，团队从金字塔结构重组为 1-6 人的小队。Owen 自己同时跑 14 个 Agent 构建 PR。他们的内部工具 BuilderBot 可以自主完成部分复杂功能的 100%，大多数情况下完成 85-90%，人类只做最后的 10-15%。
+
+他还分享了一个很有前瞻性的概念：生成式 UI。Cash App 的 MoneyBot 不再基于预先编码的页面，而是根据用户查询实时生成图表和可视化。Square 的 ManagerBot 可以在运行时「创建」自定义应用——多门店排班加 WhatsApp 集成，这些 UI 逻辑并不存在于提交给应用商店的源代码中。当 Agent 不仅能写代码，还能在运行时生成应用，软件的定义本身在发生变化。
+
+Kimi 创始人杨植麟在[中关村论坛的演讲](https://www.bestblogs.dev/article/61ecfe69)从技术层面描述了 Agent 的下一个形态：K2.5 的 Agent Swarm 可以动态生成专业化子智能体并行协作，所有角色分配和任务拆解由 K2.5 自身实时决定。这和 Block 的实践形成了有趣的呼应——不论在企业组织还是模型架构层面，「一个人/模型管多个 Agent」正在成为默认模式。
+
+两档播客提供了更多视角。Claire Vo 分享了[从 OpenClaw 质疑者到信徒的转变](https://www.bestblogs.dev/article/5ed009b)，提出「智能体团队」概念——通过职能分离降低上下文负载。[开始连接 LinkStart](https://www.bestblogs.dev/article/a31eadc) 则直接追问了打工人最关心的问题：养虾时代，OpenClaw 让打工人何去何从？
+
+## 谁来证明你是人类
+
+Agent 在增多，代码在自动生成，组织在重构——一个日益紧迫的问题浮出水面：在 AI 可以完美模拟人类行为的时代，如何确认真实身份？
+
+World CEO Alex Blania 在 a16z 的[访谈](https://www.bestblogs.dev/article/b1f1ecb)中展示了一个思路：用虹膜识别硬件 Orb 提供全球唯一性证明，通过多方计算和零知识证明实现隐私保护下的身份验证。网络已有超过 1,790 万已验证用户。今年 3 月他们还发布了 AgentKit，让 AI Agent 可以携带加密证明表明自己背后有一个经过验证的真人——当 Cursor 3 支持同时运行多个 Agent、Kimi K2.5 能动态生成 Agent 集群、Block 的 Goose 写了 90% 的代码时，「这个 Agent 背后是谁」的问题不再是哲学思辨，而是基础设施需求。
+
+和谢晨关于[机器人数据的对话](https://www.bestblogs.dev/article/5f6e799)提供了另一个有趣的反差：LLM 已经穷尽了互联网文本数据，但机器人领域仍处于数据荒漠。当软件世界的智能体工程化已经走到组织重构的阶段，物理世界的 AI 还在为基础数据发愁。两个领域的落差，本身就说明了智能体工程化的价值——它是在数据和模型之上、让 AI 真正可用的那一层。
+
+---
+
+这周的内容让我对 BestBlogs 2.0 的开发有了更清晰的认识。我一直在实践的工作方式——用设计文档定义标准、让 Agent 在约束内交付、通过 Preview 做验收——本质上就是 rickyshou 描述的那条演进路径的一个切面。区别在于我还没有把这些实践沉淀为系统化的 Harness，更多是靠经验和直觉在做编排。
+
+Böckeler 的约束工程框架给了我一个可操作的方向：把 BestBlogs 的设计语言文档、组件规范和品牌指南当作前馈引导，把 Preview 的视觉验收和自动化测试当作反馈传感器，形成一个闭环。天猫 97.9% 采纳率的经验也印证了一点：与其让 AI 从零创作，不如给它好的东西来抄。BestBlogs 的设计系统和组件库天然就是最好的「样板间」。
+
+Owen Jennings 说得很直接：「我们不再亲手写代码了，那个时代已经结束。」这话说得有些激进，但从我这周在手机上远程编排 Claude Code 的体验来看，方向是对的。关键在于你定义标准和边界的能力——智能体工程化在抬升 Agent 能力的同时，也在抬升对编排者的要求。
+
+本期完整的 20 篇精选文章可以在 [BestBlogs.dev](https://www.bestblogs.dev/newsletter/issue89) 上查看。
+
+保持好奇，我们下周见。
+
+![保持好奇，我们下周见。](https://media.ginonotes.com/images/bestblogs-weekly-issue-89/bestblogs-issue-89-7.png)
