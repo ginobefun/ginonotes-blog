@@ -1,0 +1,146 @@
+---
+title: Scaling Managed Agents：将大脑与双手解耦[译述]
+date: 2026-04-09
+description: Anthropic 在工程博客阐述 Managed Agents 的架构哲学：用 session、harness、sandbox 三类稳定接口虚拟化智能体组件，把「大脑」与「双手」解耦，并解释安全边界、上下文外置与 TTFT 优化。附前沿速览与原文链接。
+category: ai
+tags: Anthropic, Managed Agents, Claude Platform, Harness, Session, Sandbox, Agent Infrastructure
+cover: https://placehold.co/1200x630/1a365d/fefdfb/png?text=Managed+Agents
+slug: anthropic-managed-agents
+---
+
+下面这篇文章值得产品和工程团队认真读一遍。它讨论的不是再堆一层更复杂的 Agent loop，而是如何把 Agent 做成可运行、可恢复、可扩展、可治理的软件系统。Anthropic 的判断很直接：很多 harness 其实在替旧模型的短板打补丁，模型一进步，补丁就会失效，甚至变成负担；[Managed Agents](https://www.anthropic.com/engineering/managed-agents) 想解决的，正是这种不断重写运行时的工程困局。
+
+文章最有价值的部分，是把 Agent 基础设施抽象成三个相对稳定的接口：`session`、`harness`、`sandbox`。`session` 持久化事件与状态，`harness` 负责调用模型与组织上下文，`sandbox` 负责执行代码与文件操作——意义不只是架构更干净，而是让脑、手、记忆彼此解耦，任一层出问题都能单独替换与恢复。对长时任务、多工具与企业权限来说，这比单纯堆 prompt 或 workflow 更接近生产系统。
+
+我最认同的一点，是明确提出 **session 不是上下文窗口**：长期状态交给可查询、可切片的事件流，窗口只承载当前推理。对产品与自动化团队来说，这是把「上下文工程」从模型内侧搬到可治理外侧的关键一步。
+
+---
+
+## 前沿速览：平台化运行时与权限边界
+
+- **产品定位**：Managed Agents 是 [Claude Platform](https://www.anthropic.com/) 上的托管服务，面向**长时程、多步**的 Agent 工作负载；设计目标是提供一组**比任何具体实现更长寿**的接口（官方表述见[原文](https://www.anthropic.com/engineering/managed-agents)）。上手可参考官方文档中的 *Claude Managed Agents* 指引。
+- **Harness 会「过期」**：同一套 harness 在 Claude Sonnet 4.5 上需要「上下文重置」来缓解所谓「上下文焦虑」（感知窗口将满时过早收尾）；换到 Opus 4.5 后该行为消失，旧机制反成死重——说明 **harness 必须随模型代际持续重审**。
+- **可观测与弹性**：早期「单容器养宠物」导致 session 与调试窗口绑死；解耦后容器与 harness 均可视为 **cattle**，失败以工具错误回传模型，可按标准配方 `provision` 换新沙箱，或用 `wake` + `getSession` 恢复 harness。
+- **安全结构**：凭据不进入运行不可信代码的 sandbox；Git 凭据在初始化时注入 remote，MCP 经代理从 vault 取 OAuth——**缩小 prompt injection 的爆炸半径**。
+- **性能信号**：按需 `execute` 才拉起沙箱后，官方给出 **p50 TTFT 约降 60%、p95 降 90%+**（TTFT = time-to-first-token，从接任务到首个输出 token 的等待）。
+- **生态位**：文中将 Managed Agents 定位为 **meta-harness**——不预设未来只有一种 harness；与 Claude Code、领域专用 harness 可并存，竞争重心偏向**运行时、恢复、工具与治理**，而非多一层薄封装。
+
+![Managed Agents 与 Claude Platform 长时程智能体托管（占位图）](https://placehold.co/1200x420/1a365d/d97706/png?text=Claude+Platform+%E2%80%A2+Managed+Agents)
+
+---
+
+## 原文信息
+
+- **英文标题**：*Scaling Managed Agents: Decoupling the brain from the hands*
+- **原文地址**：[anthropic.com/engineering/managed-agents](https://www.anthropic.com/engineering/managed-agents)
+- **作者**：Lance Martin、Gabe Cemaj、Michael Cohen；致谢 Agents API 团队与 Jake Eaton。
+
+---
+
+## 为什么 harness 会「过时」
+
+Anthropic 工程博客一直在讨论：如何构建高效 Agent，以及如何为长时间运行任务设计 harness。贯穿这些工作的一点是：**harness 往往编码了「模型独自做不到什么」的假设**；而模型变强后，这些假设必须被反复质疑，否则就会过时。
+
+例如，团队曾发现 Claude Sonnet 4.5 在感知上下文窗口接近上限时，会倾向**过早结束任务**，有时被称为「上下文焦虑」。为此在 harness 里加入了上下文重置。把同一 harness 用到 Claude Opus 4.5 上时，该行为已消失，重置反而成为多余负担。团队预期 harness 仍会持续演化，因此推出 Managed Agents：在 Claude Platform 上以**一小套尽量稳定的接口**代客户运行长时程 Agent，使接口寿命长于任何单一实现（包括他们当前自己的实现）。
+
+![harness 随模型代际变化：补丁可能变死重（占位图）](https://placehold.co/1200x360/fefdfb/1a365d/png?text=Harness+%E2%89%A0+%E6%B0%B8%E6%81%92%E8%A7%84%E5%88%99)
+
+---
+
+## 「尚未被发明的程序」与三层抽象
+
+构建 Managed Agents，等于在解决计算机里一个老问题：**如何为今天还想不到的程序设计系统**。
+
+几十年前，操作系统把硬件虚拟成 **进程、文件** 等足够通用的抽象；硬件更替，抽象仍在。`read()` 不必关心底层是 1970 年代的盘组还是今天的 SSD——**上层接口稳定，下层实现自由替换**。
+
+Managed Agents 沿用同一思路，把 Agent 组成虚拟化为：
+
+- **session**：追加式日志，记录已发生的全部事件；
+- **harness**：调用 Claude，并把工具调用路由到对应基础设施的循环；
+- **sandbox**：Claude 运行代码、编辑文件的执行环境。
+
+这样每一部分的实现可独立替换，而不拖累其他部分；团队在意的是**接口形态**，而非背后具体跑的是什么。
+
+---
+
+## 不要养一只「宠物」
+
+起初，所有组件放在**同一容器**里：`session`、agent harness、`sandbox` 共享环境。好处是文件编辑可走直接 syscall，也无须划分服务边界。
+
+但耦合带来经典问题：**养了一只宠物**（pets vs. cattle）。容器即具名的、需精心照料的个体——容器挂则 session 丢；容器无响应就要「救」。排查卡死 session 时，入口只有 WebSocket 事件流，**无法区分** harness bug、丢包还是容器掉线；工程师若要进 shell 调试，容器里往往还有用户数据，**实质上难以安全调试**。
+
+第二个问题：harness 默认假设 Claude 处理的一切与它在**同一容器**内。客户要让 Claude 访问自有 VPC 资源时，只能网络打通或把 harness 部署到客户环境——**写死在 harness 里的假设**，在换基础设施时变成产品阻力。
+
+---
+
+## 把大脑与双手解耦
+
+最终方案是：把 **大脑**（Claude 与其 harness）与 **双手**（执行动作的 sandbox 与工具）、以及 **session**（会话事件日志）**彻底解耦**。各自成为独立接口，彼此假设尽量少，**可独立失败、独立替换**。
+
+### harness 离开容器
+
+解耦后，harness 不再住在容器内；调用容器与调用其他工具一样：
+
+```text
+execute(name, input) → string
+```
+
+容器从宠物变为牛群：容器挂掉时，harness 视为工具调用错误并回传 Claude；若模型决定重试，可用标准流程换新环境：
+
+```text
+provision({resources})
+```
+
+无须再「把坏容器一点点救活」。
+
+### harness 故障恢复
+
+session 日志在 harness **之外**，故 harness 崩溃后不必保留其内部状态。新 harness 可通过 `wake(sessionId)` 启动，用 `getSession(id)` 取回事件日志并从断点继续。循环中用 `emitEvent(id, event)` 写入 session，保证事件**持久、可追溯**。
+
+![execute / provision / wake 解耦示意（占位图）](https://placehold.co/1200x380/1a365d/fefdfb/png?text=execute+%E2%80%A2+provision+%E2%80%A2+wake)
+
+### 安全边界
+
+在耦合设计里，不可信生成代码与凭据**同容器**运行，prompt injection 只需诱导模型读环境即可拿到 token，进而 spawn 无限制的 session。缩权限是缓解，但仍依赖「模型拿着受限 token 也做不了太多」的假设；而模型在变强。
+
+结构上的修复是：**token 对运行生成代码的 sandbox 不可达**。做法包括：认证与资源绑定，或放在 sandbox 外的 vault。对 Git：初始化时用仓库 token 克隆并写入本地 remote，使 `push` / `pull` 在 sandbox 内可用，而 Agent **不直接接触 token**。对自定义工具：支持 MCP，OAuth 存 vault；Claude 经专用代理调用 MCP，代理用 session 关联 token 从 vault 取真实凭据，**harness 不接触凭据**。
+
+---
+
+## session 不是 Claude 的上下文窗口
+
+长时任务常超出上下文窗口；常见手段（compaction、memory tool、context trimming）往往要做**不可逆**的取舍，难以预知未来回合需要哪些 token。若 compaction 改写消息后 harness 从窗口移除旧消息，除非另有存储，否则**不可恢复**。
+
+既有工作曾把上下文做成窗口外的对象（例如在 REPL 里由 LLM 写代码筛选）。Managed Agents 里，**session 扮演窗口外的上下文对象**；上下文不在 sandbox / REPL 内，而在 **session 日志** 中。通过 `getEvents()`，大脑可按位置读取事件流片段：从上次读指针继续、回卷到某时刻前几条、或在动作前重读等。
+
+取回的事件还可在送入模型前由 harness **任意转换**（例如为 prompt cache 命中率做组织）。团队把 **可恢复的上下文存储** 交给 session，把 **上下文如何管理** 交给 harness，因为无法预知未来模型需要何种上下文工程；接口只保证 session **持久且可查询**。
+
+---
+
+## 多个大脑，多双手
+
+**多个大脑**：客户要让 Claude 访问自有 VPC 时，不再默认 harness 与资源同容器，**网络对等**的硬需求减弱。性能上，原先「一脑一容器」使每个 session 先付满额容器初始化成本（含克隆仓库等），即使不用 sandbox；TTFT 被拉高。解耦后，仅在实际需要时通过工具调用申请沙箱：
+
+```text
+execute(name, input) → string
+```
+
+不需要容器的 session 不必等待；编排层从 session 拉取待处理事件后即可开始推理。官方数据：**p50 TTFT 约降 60%，p95 降 90%+**；扩展多脑即启动多个**无状态** harness，按需接双手。
+
+**多双手**：Claude 需理解多个执行环境并决定把活交给谁，比在单一 shell 中工作更难；早期模型做不到，故曾把大脑放进单容器。智能提升后，单容器成瓶颈——**一挂全丢**。解耦后每只「手」仍是 `execute(name, input) → string`，可接自定义工具、任意 MCP server 或官方工具；harness 不必知道 sandbox 是容器、手机还是模拟器。手与脑不绑定，**脑与脑之间还可传递手**。
+
+![多大脑、多双手与无状态 harness 扩展（占位图）](https://placehold.co/1200x380/d97706/fefdfb/png?text=Many+brains+%E2%80%A2+Many+hands)
+
+---
+
+## 结语：meta-harness 与未定的未来形态
+
+挑战仍是老问题：**为尚未被发明的程序设计系统**。操作系统用通用抽象延续数十年；Managed Agents 希望容纳未来围绕 Claude 的不同 harness、sandbox 与其他组件。
+
+它被定位为 **meta-harness**：不预设未来唯一 harness，而用通用接口承载多种 harness（如 Claude Code 与窄域专用 harness）。设计者对 Claude 周围接口有明确判断：需要 **session** 操作状态、**sandbox** 计算，并需扩展至多脑多手；接口要为长时程 **可靠、安全** 而设计，但**不预设**未来需要多少脑与手、它们部署在何处。
+
+---
+
+## 译述说明
+
+本文为基于 Anthropic 工程博客的转述与整理，结构与论点以原文为准；技术细节与数据引用自 [Scaling Managed Agents: Decoupling the brain from the hands](https://www.anthropic.com/engineering/managed-agents)。若官方文档路径有更新，请以 [Anthropic 开发者文档](https://docs.anthropic.com/) 为准。
