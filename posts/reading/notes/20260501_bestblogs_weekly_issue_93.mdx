@@ -1,0 +1,308 @@
+---
+title: BestBlogs.dev 周刊第 93 期：AI 次方变革
+date: 2026-05-01
+description: 本期主题：把 AI 放到指数位上而不是加号边上 —— 杨斌、Karpathy、Demis 三个理论框架，加上国内三家大厂的 Harness 中文化和 Claude Code 工程心法。
+category: reading
+tags: BestBlogs, AI Coding, Harness Engineering, Software 3.0, Claude Code, Karpathy
+cover: https://media.ginonotes.com/covers/cover_bestblogs_93.png
+slug: bestblogs-weekly-issue-93
+---
+
+> **本期主题**：把 AI 放到指数位上，而不是加号边上 —— 用杨斌的「AI 次方变革」串起 Karpathy 的 Software 3.0、Demis 的 AGI 路径、国内三家大厂的 Harness 中文化、Anthropic 两份 Claude Code 工程心法、OpenAI 编排栈、企业生产实战，以及 OpenAI × 微软的关系新阶段。
+>
+> 🎧 同步播客：**EP38 · BestBlogs 周刊第 93 期 · AI 次方变革**（在小宇宙搜索 BestBlogs 周刊）
+>
+> 📚 完整周刊：[https://www.bestblogs.dev/newsletter/issue93](https://www.bestblogs.dev/newsletter/issue93)
+
+![BestBlogs 第 93 期 · AI 次方变革](https://media.ginonotes.com/images/bestblogs-weekly-issue-93/bestblogs-issue-93-1.png)
+
+---
+
+## 导语：组织的中年撞上技术的青春期
+
+清华经管学院杨斌教授本周提出 **AI 次方变革** —— 把 AI 放到指数位上，而不是加号边上。
+
+「+AI」的心智追求即期绩效、主流一致、线性稳进，但 AI 不是一种成熟工具，它每天都在变；底数（组织 / 心智 / 知识）如果没有先质变，幂位再怎么放大也没用。底数小于一时，幂位甚至会让结果塌陷。
+
+这一期读完 20 篇内容，杨斌这个隐喻像一根串绳：**Karpathy 在 Sequoia 给出 Software 3.0 的完整框架，Demis 在 Y Combinator 把 AGI 时间表压到 2030，国内三家大厂同周给出 Harness Engineering 的中文版第一性原理，Anthropic 把 Claude Code 的两份内部经验贴出来，OpenAI 把 Codex 编排栈打开，京东和 Java 阵营把企业实战补齐**。这些动作放在一起看，像同一句话被翻译成不同口音在不同地方反复说。
+
+回头看前两期周刊，第 91 期是基建周，第 92 期是模型周。这一期不再是单一爆发，而是大家集体在往同一个方向上汇拢 —— **从 +AI 走向 AI 次方**。
+
+---
+
+## 个人更新：BestBlogs 四月内测收官，五月进入早鸟期
+
+四月份 BestBlogs 的内测正式收官。这一个月里我们做了挺多事情，挑用户能感知的几条说一下：
+
+1. **开放能力发布**（v2.0.7）：上线 OpenAPI、命令行工具 `@bestblogs/cli`、还有给 Claude Code 这类智能体准备的 skills 套件，让外部开发者可以直接调用站内数据和功能。
+2. **内建翻译升级到 v2**（v2.1.0）：同一篇内容只扣一次配额，中英双向，覆盖文章 / 播客 / 视频。文章和推文详情页可以直接读译文，不再需要跳转 wenrun.ai。
+3. **每日回顾上线**（v2.0.11 + v2.1.1）：AI 根据你当天的阅读足迹提炼洞察，可邮件投递。Pro 内测用户每天会收到一封中英双语的 Daily Review。
+4. **主题深度解读**（v2.1.0 + v2.1.3）：上线 Topic Pages，目前支持事件、领域、人物 / 组织、对比四种类型，编辑可以把最值得读的主题置顶。
+5. **Pro 早报双形态**（v2.1.0）：文字版（一句话总结 + 关键洞察 + 头条卡片）和播客版可以即时切换，喜欢扫读的有了文字版，喜欢通勤听的还是播客版。
+
+此外还上线了**公开 /docs 文档中心**和 **Mobile App 内测**。完整更新日志在 [bestblogs.dev/changelog](https://www.bestblogs.dev/changelog)。
+
+![BestBlogs 4 月主要交付](https://media.ginonotes.com/images/bestblogs-weekly-issue-93/bestblogs-issue-93-april-recap.png)
+
+**五月开始，BestBlogs 正式进入早鸟期**，欢迎大家订阅、使用，把反馈直接告诉我。
+
+---
+
+## 一、三个理论框架：杨斌、Karpathy、Demis 同周给出三种语言
+
+这一周最有意思的地方是，三个完全不同背景的人，几乎在同一周给出了同一种判断的不同版本。
+
+### 杨斌：组织的中年撞上技术的青春期
+
+![杨斌：AI 次方变革](https://image.jido.dev/20260429130910_c0ee5b6.png)
+
+杨斌教授的版本最直接。他说「+AI」是组织的中年心智，**追求即期绩效、主流一致、线性稳进**。这种心智把 AI 当成现有流程的一个有益补充，不挑战既有的权力分布，也不挑战既有的文化假设。
+
+但 AI 不是一种成熟工具，它每天都在变。如果底数没有先发生质变，幂位再怎么放大都没有用。底数小于一时，幂位甚至会让结果塌陷。
+
+正确的做法是把 AI 放到指数位上 —— **破执重构**，让组织从大写变小写，让主流让位给杨斌说的「**流人和边域**」。他在演讲里点名 **Claude Code 和 OpenClaw** 这两个产品，说它们都是流人作品，都是在边缘环境里长出来的，不是被规划出来的。
+
+这一点和涌现的本质相关：涌现不能被计划，但有规律。杨斌引用了两句英文：**context not control，emerging not planning**。情境而不是控制，涌现而不是计划。
+
+→ 阅读原文：[杨斌：我为什么要提「AI 次方变革」](https://www.bestblogs.dev/article/9d66aff0)
+
+### Karpathy: Software 3.0 + Vibe Coding + Agentic Engineering
+
+![Karpathy: Software 3.0](https://media.ginonotes.com/images/bestblogs-weekly-issue-93/bestblogs-issue-93-karpathy.png)
+
+Karpathy 在 Sequoia 现场给硅谷版的「AI 次方」搭了一套完整语言。他把过去的程序员演化拆成三段：
+
+- **Software 1.0**：人类用代码显式写规则
+- **Software 2.0**：用神经网络的权重学规则
+- **Software 3.0**：大语言模型变成计算机本身，**上下文窗口变成新的接口**。在这个范式里，编程不是写代码，是设计上下文
+
+然后他给了两个新词。**Vibe Coding** 是抬高地板，让所有人都可以靠描述意图做出软件。**Agentic Engineering** 是给智能体保持质量和边界，因为这些智能体本质上是有锯齿（spiky）、有概率性的工程实体，需要被驯服。
+
+Karpathy 在访谈里有一句话我印象很深：**You can outsource your thinking, but you can't outsource your understanding**。未来的程序员是 director，是导演，是那个决定 taste 和 systems design 的角色，那部分是不可被外包的。
+
+→ 阅读原文（中文整理）：[Karpathy 最新访谈：Vibe Coding 只是开始，真正重要的是 Agentic Engineering](https://www.bestblogs.dev/article/87929773)
+→ 视频原始版：[Andrej Karpathy: Software 3.0 完整框架](https://www.bestblogs.dev/article/fd1804c)
+
+### Demis Hassabis：AGI 还差什么 + 创业者怎么办
+
+![Demis on AGI](https://media.ginonotes.com/images/bestblogs-weekly-issue-93/bestblogs-issue-93-demis.png)
+
+Demis Hassabis 在 Y Combinator 现场，从科学家的角度回答 AGI 还差什么。他把 AGI 时间表压到大概 **2030 年**，并且明确指出还差三块「大想法」：
+
+1. **持续学习（Continual Learning）**：模型要能在不忘旧知识的情况下持续吸收新知识
+2. **长程推理（Long-term Reasoning）**：从简单的链式思考升级到能做计划和自省的更稳健推理
+3. **类脑工作记忆（Brain-style Working Memory）**：从蛮力堆上下文窗口升级到更接近人脑的高效记忆
+
+Demis 给创业者的建议很硬：**假设 AGI 会在你公司生命周期的中段出现**。所以产品要去**截击 AI 曲线**，去那些「暴力搜索失效但 AI 推理擅长」的组合空间，比如材料科学、医药、Isomorphic Labs 在做的虚拟细胞。**不要去和「AGI + 一行 prompt」竞争**，那条路是没有壁垒的。
+
+→ 阅读原文：[How to Build the Future: Demis Hassabis](https://www.bestblogs.dev/article/b820e09)
+
+---
+
+把这三个人的话叠在一起，会发现一个共同信号 —— **新范式的关键不是模型本身，是组织怎么改、人在哪里、产品打哪个空间**。杨斌讲的是组织的底数得先质变，Karpathy 讲的是程序员要变成导演，Demis 讲的是产品要去截击曲线。三个人从三个层面回答同一个问题。
+
+---
+
+## 二、Harness Engineering 中文化：四篇同周给出第一性原理
+
+有了框架，看落地。这一周国内三家大厂几乎同步给出了 Harness Engineering 的中文版第一性原理，加上腾讯云开发者那篇挑衅式的「RAG 已死」，构成了本周最密集的一组中文 Agent 工程化讨论。
+
+![Harness Engineering 中文化](https://media.ginonotes.com/images/bestblogs-weekly-issue-93/bestblogs-issue-93-harness.png)
+
+### 楼天城：开发主导权正在交给 AI
+
+最让我意外的是小马智行 CTO **楼天城**接受量子位的访谈。一个开发自动驾驶十年的人，公开承认开发的主导权正在交给 AI。原文里他用了一句话：
+
+> Harness 是这个时代最关键的能力之一。
+
+他把今天的 AI 形容成一匹脱缰野马，能调用工具、能调用各种 skill，主动性和能量都在大幅提升。然后他抛出一个让人停下来想一下的判断：**未来甚至连人类，都可能成为被「调用」的一环**。
+
+这一段听起来有点黑色幽默，但他的逻辑是直的 —— L4 级自动驾驶不能靠人类兜底，模仿学习的天花板就是人类本身。当 AI 司机的安全性全面超过人类，再让人类工程师手把手教 AI 开车，就像让业余棋手去辅导 AlphaGo。这是范式问题，不是态度问题。
+
+→ 阅读原文：[量子位专访楼天城：AI 是匹脱缰野马，Harness 是这个时代最关键的能力](https://www.bestblogs.dev/article/598c24ff)
+
+### 腾讯：Harness 不是目的，知识才是护城河
+
+腾讯技术工程团队再上一层定义：**Harness 不是目的，知识才是护城河**。这个判断把抽象提了一级。
+
+Harness 是工程实现，是 SOP 和 Skill 库的集合。但真正决定一个团队能不能持续受益的，是这套 Harness 背后能沉淀什么知识。腾讯给出的是一个从 SOP 到 Skill 库的工程交付路线，描述了一个团队怎么把每天踩的坑沉淀成可复用的能力。
+
+→ 阅读原文：[Harness 不是目的，知识才是护城河 —— 一个 AI 工程交付团队的知识沉淀实践](https://www.bestblogs.dev/article/93462cd7)
+
+### 阿里云：拆 OpenClaw 的 Agent 架构，三条反直觉结论
+
+阿里云开发者用一篇长文系统拆 OpenClaw 的 Agent 架构。这篇文章值得做 Agent 的同学读，因为里面有几个反直觉结论：
+
+1. **更贵的模型没你想象中那么有用**，Harness 和验证测试的质量对成功率的影响更大
+2. **调试 Agent 行为时，应该优先检查工具定义** —— 多数工具调用错误来自描述不准确，不是模型不够聪明
+3. **评测系统本身的问题，往往比 Agent 的问题更难发现**。如果一直在 Agent 代码上调，效果可能上不去
+
+→ 阅读原文：[你不知道的 Agent：原理、架构与工程实践](https://www.bestblogs.dev/article/5a46573c)
+
+### 腾讯云：RAG 已死？不，是 Grep 回归了
+
+最后是腾讯云开发者那篇 **RAG 已死？不，是 Grep 回归了！** 标题挑衅，但论点扎实。
+
+作者的判断是：**高质量的 Skill 和工具描述比向量索引更值钱**。当模型本身越来越强，长上下文越来越便宜的时候，传统 RAG 那套切片、向量化、相似度召回的复杂度就显得多余。直接用 Grep，用关键字搜索，加上准确的工具描述，效果反而更好。
+
+这其实和阿里那篇结论是相通的，都指向同一件事 —— **工具描述和 Harness 比模型选型更重要**。
+
+→ 阅读原文：[RAG 已死？不，是 Grep 回归了！](https://www.bestblogs.dev/article/409d9979)
+
+---
+
+把这四篇放在杨斌的框架下看，就是底数的质变。组织如果还在比谁的模型更贵，那就是把变革放在加号位上。**组织如果开始研究 Harness、研究知识沉淀、研究工具描述，那就是开始把变革放在指数位上**。
+
+---
+
+## 三、Anthropic 两连发：Claude Code 心法 + 提示缓存
+
+这一周 Anthropic 官方贴了两份 Claude Code 团队的内部经验，正好补上了 Karpathy 没回答的工程细节。
+
+![Claude Code 团队经验](https://media.ginonotes.com/images/bestblogs-weekly-issue-93/bestblogs-issue-93-claude-code.png)
+
+### 像带新人一样引导 Claude Code
+
+第一篇用了一个真实案例。**MacCoss Lab 是华盛顿大学的一个蛋白质分析实验室，他们的开源软件 Skyline 已经维护了 17 年，70 万行 C# 代码**。主开发者 Brendan 一开始很怀疑 Claude Code 能不能搞定这种长寿命项目。
+
+最后他想清楚了一件事：自己过去十几年带本科生、研究生、博士后进入这套代码库，那一整套 onboarding 方法论，可以原封不动地用在 Claude Code 上。**先给「实验室手册」，再交工作任务**。把 AI 当作一个新进研究员来带，而不是当成一个魔法盒子。
+
+这一篇值得做工程的同学读。它没有讲什么新概念，但它把心法落到了具体场景。
+
+→ 阅读原文：[像带新人一样引导 Claude Code：来自 17 年开发经验的启示](https://www.bestblogs.dev/article/c1ecbe08)
+
+### 提示缓存对 Coding Agent 至关重要
+
+第二篇是 Claude Code 团队自己的复盘：**提示缓存对编程智能体是至关重要的**，命中率直接决定了一个长程任务能不能跑稳。
+
+这听起来很工程，但它其实是一个范式判断 —— 当智能体要持续可靠地干完长任务，关键变量不是模型本身的智能，而是**它能不能稳定地保留上下文**。提示缓存就是这个稳定性的最直接来源。
+
+两篇加起来，把 Karpathy 留下的工程黑盒打开了。
+
+→ 阅读原文：[构建 Claude Code 的经验教训：提示缓存至关重要](https://www.bestblogs.dev/article/68065f88)
+
+---
+
+## 四、OpenAI 编排栈 + Cloudflare：让 Agent 上手干活
+
+聊完心法，看落地的几条路径。
+
+### OpenAI 把 Codex 编排栈打开
+
+![OpenAI Symphony 编排栈](https://media.ginonotes.com/images/bestblogs-weekly-issue-93/bestblogs-issue-93-symphony.png)
+
+OpenAI 这一周三件事可以放在一起看：
+
+1. **Symphony**：把 Codex 多智能体编排做成开源规范 → [阅读原文](https://www.bestblogs.dev/article/816f23c9)
+2. **AI Engineer 现场拆解 Codex 子智能体**：把 OpenAI 的 AI 工程平台从 IDE 里拎出来 → [阅读原文](https://www.bestblogs.dev/article/8460a7a)
+3. **长时间运行的智能体**（Elevate）：补另一面 —— 让 Agent 持续可靠干完长任务，要从持久化、子线程、检查点设计起 → [阅读原文](https://www.bestblogs.dev/article/048d846e)
+
+这一组三篇组合起来，像极了 Cloudflare 上一期做的「Agent 基建周」，只不过这次是 OpenAI 在做。
+
+### Cloudflare：Agent 自己开户、买域名、部署应用
+
+这一期 Cloudflare 的代表作是一个**干净的 one-shot 演示** —— AI Agent 能自己创建 Cloudflare 账户、买域名、把 Workers 部署上线。背后有 **Managed OAuth + Mesh** 撑起私有联网。
+
+这件事小，但意义大。它把「Agent 上手干活」从 demo 推到了生产入口。**Software 3.0 真正能跑的标志，不是 Agent 能写多少代码，而是 Agent 能不能从注册账户开始，把整个交付流水线走完**。
+
+→ 阅读原文：[AI 智能体现在可以创建 Cloudflare 账户、购买域名并部署应用](https://www.bestblogs.dev/article/e6e4891f)
+
+---
+
+## 五、企业生产实战：京东 GRAM + Java MCP
+
+两篇值得说，是企业版的「AI 次方」基础设施。
+
+### 京东 GRAM：50ms 端到端的生成式推荐
+
+京东广告团队披露 **GRAM 架构** —— 他们把生成式推荐做到了**端到端 50 毫秒**。这是什么概念呢，50 毫秒是用户感知不到的延迟。**在电商场景下，把「模型即推荐系统」这个判断打了第一个范本**。
+
+这背后涉及到训练侧的稀疏化、推理侧的工程化、还有大量的算子优化，是真正的工程硬功夫。
+
+→ 阅读原文：[京东广告大模型实战：GRAM 架构如何在 50ms 内完成生成式推荐？](https://www.bestblogs.dev/article/bfc8df6e)
+
+### Java 世界中的 MCP：把 LLM 集成提升到架构纪律
+
+InfoQ 的长文，讲 **Java MCP SDK**。这篇文章我推荐 Java 同学读一下。它的视角是把 MCP 看作**架构纪律**，不是 prompt 工程：
+
+- **显式契约**：Models 只调用通过协议声明的工具
+- **反腐败层**：MCP Server 在 LLM 和核心系统之间隔一层，控制能力暴露范围
+- **控制平面**：把 LLM 集成放进 Spring 和 JVM 团队熟悉的服务边界、可观测性、资源管理体系里
+
+它不是教你写 MCP 代码，是教你把 LLM 集成放进企业架构的那条线里。
+
+→ 阅读原文：[Java 世界中的 MCP：为 LLM 集成带来架构策略](https://www.bestblogs.dev/article/c857f67e)
+
+---
+
+## 六、范式思辨：Skill 蒸馏、Language Agent 60 年史、智能体失败案例
+
+### Skill 到底能蒸馏我们的几分之几？
+
+腾讯科技的这篇文章，从 GitHub 上一批 skill 类项目的爆火谈起。三月底同时火起来的有「同事 skill」「老板 skill」「女娲 skill」 —— 同事 skill 把离职同事的飞书消息、钉钉文档、Slack 记录、微信聊天都喂给 Claude，自动生成一个 skill 文件。装上之后 AI 能「变成」那个同事，连说话语气都模仿。
+
+然后 CMU 出了一篇论文，跑出来 SkillFoundry，一次扫一遍 GitHub 仓库、API 文档、Jupyter Notebook、学术论文，挖出 286 个 skill。BenchFlow 团队的 SkillsBench 测了 84 个任务，加 Skill 后平均通过率提升 16.2 个百分点。
+
+但同一周还出现了一个反向项目 **anti-distill**，帮你生成一份看起来完整、核心知识却被掏空的 skill 文件。作者追问的问题是：**那层能被掏空的是什么，那层掏不空的又是什么？**
+
+这个问题没有答案，但值得每个内容工作者放在心里。
+
+→ 阅读原文：[严肃聊聊，Skill 到底能蒸馏我们的几分之几？](https://www.bestblogs.dev/article/abc08c46)
+
+### 张小珺 × 苏煜：Language Agent 60 年技术史
+
+张小珺这一期访谈，嘉宾是俄亥俄州立大学的苏煜教授。两个小时的长对谈，把 Language Agent 60 年的技术史复盘了一遍 —— 从 1960 年代的逻辑代理，到神经代理、语义解析，再到今天的语言代理。
+
+苏煜给出一个判断：**OpenClaw Moment 像 ChatGPT Moment**。意思是 OpenClaw 的出现，可能是 Agent 时代的那个分水岭。这一期我推荐五一假期听，节奏不快，信息密度大。
+
+→ 阅读原文：[139.【Agent 综述】和苏煜聊 Agent 技术史、OpenClaw Moment、边界的消弭和社会的辐射](https://www.bestblogs.dev/article/4de58ea)
+
+### PostHog：LLM 代码生成的五条修法
+
+PostHog 的 Danilo 在 AI Engineer 现场分享了一个智能体的失败案例。他们做的 **Wizard 是一个一个月服务 15,000 用户的自动化集成助手**，模型很容易因为静态训练数据过期而搞砸事情。
+
+Danilo 给了五条修法：
+
+1. **新鲜上下文**：把最新的 Markdown 文档直接注入上下文（避开复杂 RAG）
+2. **模型飞机**：用简化版的真实应用做模板
+3. **面包屑**：把大任务拆成顺序步骤
+4. **推理时审讯**：每次跑完问 Agent「我应该怎么做才能让你成功？」
+5. **prose > scaffolding**：纯文本散文比脚手架代码更值钱
+
+最后一条留下一句话挺有力 —— **在 AI 时代，文档质量是面向未来的资产，硬编码的逻辑是在折旧**。
+
+→ 阅读原文：[LLM 代码生成为什么会失败，以及如何避免](https://www.bestblogs.dev/article/dfa6565)
+
+---
+
+## 七、商业重构：OpenAI 与微软的新阶段
+
+OpenAI 和微软这周宣布了一个重要的合作新阶段。新协议把双方关系**从独占走向灵活**。三件事可以注意：
+
+1. **OpenAI 产品仍然优先在 Azure 上发布**，但现在可以服务任何云供应商
+2. **微软对 OpenAI 知识产权的授权，从独占改成非独占**，同时微软不再向 OpenAI 支付收入分成
+3. **微软作为大股东继续参与 OpenAI 的增长**，OpenAI 到 2030 年仍按比例向微软分成（有总额上限）
+
+这是过去两年商业重构里最值得记下的一笔。**OpenAI 走向「基础设施级」独立的关键一步迈出去了**。
+
+→ 阅读原文：[微软与 OpenAI 合作的新阶段](https://www.bestblogs.dev/article/514bb057)
+
+---
+
+## 写在最后：本周三条判断
+
+整理一下我自己读完这一周内容的判断。
+
+**第一**，杨斌的「AI 次方变革」不是又一个 buzz word，是给企业的一个很有用的提醒。如果你团队还在讨论怎么让大模型给现有流程加分，那就是把 AI 放在加号位上。如果你团队开始讨论 Harness、知识沉淀、工具描述，那就是开始把 AI 放在指数位上。
+
+**第二**，Karpathy 的 director 比喻和 Demis 的「截击 AI 曲线」建议，加上国内三家大厂的 Harness 中文化，这一组信号让我相信 **Agentic Engineering 已经从概念阶段进入工程阶段**。下一阶段比拼的不是谁的模型更强，而是谁的工程纪律更扎实。
+
+**第三**，Anthropic 那篇「带新人」的故事我会推荐给所有团队的同学读一下。它没有讲什么 cutting edge 的东西，但它把心法落到了你今天就能用的实践里。
+
+完整 20 篇精选：[https://www.bestblogs.dev/newsletter/issue93](https://www.bestblogs.dev/newsletter/issue93)
+
+订阅 BestBlogs Pro，每天早上收到双语早报，五月起进入早鸟价：[https://www.bestblogs.dev](https://www.bestblogs.dev)
+
+保持好奇，我们下周见。
+
+![保持好奇，下周见](https://media.ginonotes.com/images/bestblogs-weekly-issue-93/bestblogs-issue-93-outro.png)
