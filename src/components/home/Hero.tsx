@@ -22,7 +22,7 @@ export function Hero() {
                     className="max-w-2xl text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 md:text-5xl lg:text-6xl"
                     style={{ textWrap: 'balance' }}
                 >
-                    未来已至，创造永恒
+                    未来已至，创造不朽
                 </h1>
                 <p className="mt-5 max-w-xl text-lg leading-relaxed text-gray-500 dark:text-gray-400">
                     
